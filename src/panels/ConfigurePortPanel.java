@@ -4,17 +4,26 @@
  */
 package panels;
 
+import configuration.Configuration;
+import forms.ServerForm;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Uros
  */
 public class ConfigurePortPanel extends javax.swing.JPanel {
 
+    private final ServerForm parent;
+    private boolean filled;
+
     /**
      * Creates new form ConfigurePort
      */
-    public ConfigurePortPanel() {
+    public ConfigurePortPanel(ServerForm parent) {
         initComponents();
+        this.parent = parent;
+        this.filled = false;
     }
 
     /**
@@ -33,6 +42,11 @@ public class ConfigurePortPanel extends javax.swing.JPanel {
         jLabel1.setText("Broj porta:");
 
         btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -63,10 +77,45 @@ public class ConfigurePortPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        try {
+            Integer port = getPort();
+            Configuration.getInstance().setProperty("port", port + "");
+            Configuration.getInstance().saveChanges();
+            filled = true;
+            enableForm(false);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(parent, "Morate uneti celobrojnu vrednost", "Greska", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(parent, ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnOKActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtPort;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isFilled() {
+        return filled;
+    }
+
+    public void setFilled(boolean filled) {
+        this.filled = filled;
+    }
+
+    public void enableForm(boolean value) {
+        txtPort.setEnabled(value);
+        btnOK.setEnabled(value);
+    }
+
+    private Integer getPort() throws NumberFormatException, Exception {
+        Integer port = Integer.valueOf(txtPort.getText());
+        if (port < 1024 || port > 65535) {
+            throw new Exception("Morate uneti celobrojnu vrednost izmedju 1024 i 65535!");
+        }
+        return port;
+    }
 }

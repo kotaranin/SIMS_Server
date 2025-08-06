@@ -4,17 +4,29 @@
  */
 package panels;
 
+import configuration.Configuration;
+import forms.ServerForm;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import threads.ServerThread;
+
 /**
  *
  * @author Uros
  */
 public class ConfigureServerPanel extends javax.swing.JPanel {
 
+    private final ServerForm parent;
+    private ServerThread serverThread;
+
     /**
      * Creates new form ConfigureServerPanel
      */
-    public ConfigureServerPanel() {
+    public ConfigureServerPanel(ServerForm parent) throws IOException {
         initComponents();
+        this.parent = parent;
     }
 
     /**
@@ -30,34 +42,69 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
         btnStartStop = new javax.swing.JToggleButton();
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        lblStatus.setText("STATUS");
+        lblStatus.setText("ZAUSTAVLJEN");
 
         btnStartStop.setText("Pokreni");
+        btnStartStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartStopActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblStatus)
-                        .addGap(130, 130, 130))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnStartStop)
-                        .addGap(163, 163, 163))))
+                        .addGap(163, 163, 163))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblStatus)
+                        .addGap(68, 68, 68))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addContainerGap(82, Short.MAX_VALUE)
                 .addComponent(lblStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addGap(73, 73, 73)
                 .addComponent(btnStartStop)
                 .addGap(74, 74, 74))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartStopActionPerformed
+        try {
+            if (btnStartStop.getText().equals("Zaustavi")) {
+                // zaustavi server, promeni labelu, promeni dugme, enable sve podforme, filled = false
+                serverThread.stopServer();
+                lblStatus.setText("ZAUSTAVLJEN");
+                btnStartStop.setText("Pokreni");
+                parent.getConfigureDBPanel().enableForm(true);
+                parent.getConfigureDBPanel().setFilled(false);
+                parent.getConfigurePortPanel().enableForm(true);
+                parent.getConfigurePortPanel().setFilled(false);
+                return;
+            }
+            if (!parent.getConfigureDBPanel().isFilled()) {
+                JOptionPane.showMessageDialog(parent, "Niste uneli podatke za konfiguraciju baze podataka!", "Greska", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!parent.getConfigurePortPanel().isFilled()) {
+                JOptionPane.showMessageDialog(parent, "Niste uneli podatke za konfiguraciju broja porta!", "Greska", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            serverThread = new ServerThread(Integer.parseInt(Configuration.getInstance().getProperty("port")));
+            serverThread.start();
+            lblStatus.setText("POKRENUT");
+            btnStartStop.setText("Zaustavi");
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigureServerPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnStartStopActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

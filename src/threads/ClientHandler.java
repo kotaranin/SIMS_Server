@@ -19,17 +19,19 @@ public class ClientHandler extends Thread {
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
+    private boolean end;
 
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.sender = new Sender(socket);
         this.receiver = new Receiver(socket);
+        this.end = false;
     }
 
     @Override
     public void run() {
         try {
-            while (!socket.isClosed()) {
+            while (!end) {
                 handleRequest((Request) receiver.receive());
             }
         } catch (ClassNotFoundException | IOException ex) {
@@ -41,12 +43,19 @@ public class ClientHandler extends Thread {
         Response response = new Response();
         switch (request.getOperation()) {
             case LOG_IN:
-                
+
                 break;
             default:
                 throw new AssertionError();
         }
         sender.send(response);
+    }
+
+    public void disconnect() throws IOException {
+        end = true;
+        socket.close();
+        sender.getOut().close();
+        receiver.getIn().close();
     }
 
 }

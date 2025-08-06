@@ -4,17 +4,26 @@
  */
 package panels;
 
+import configuration.Configuration;
+import forms.ServerForm;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Uros
  */
 public class ConfigureDBPanel extends javax.swing.JPanel {
 
+    private final ServerForm parent;
+    private boolean filled;
+
     /**
      * Creates new form ConfigureDBPanel
      */
-    public ConfigureDBPanel() {
+    public ConfigureDBPanel(ServerForm parent) {
         initComponents();
+        this.parent = parent;
+        this.filled = false;
     }
 
     /**
@@ -31,7 +40,7 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtURL = new javax.swing.JTextField();
-        lblUser = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         btnOK = new javax.swing.JButton();
 
@@ -44,6 +53,11 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
         jLabel3.setText("Lozinka:");
 
         btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,7 +73,7 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                            .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                             .addComponent(txtURL)
                             .addComponent(txtPassword)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -77,7 +91,7 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -88,6 +102,22 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        try {
+            String url = getURL();
+            String user = getUsername();
+            String password = getPassword();
+            Configuration.getInstance().setProperty("url", url);
+            Configuration.getInstance().setProperty("user", user);
+            Configuration.getInstance().setProperty("password", password);
+            Configuration.getInstance().saveChanges();
+            filled = true;
+            enableForm(false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(parent, ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnOKActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
@@ -95,8 +125,43 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField lblUser;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtURL;
+    private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isFilled() {
+        return filled;
+    }
+
+    public void setFilled(boolean filled) {
+        this.filled = filled;
+    }
+
+    private String getURL() throws Exception {
+        String url = txtURL.getText();
+        if (url == null || url.isEmpty() || url.isBlank()) {
+            throw new Exception("Morate uneti URL!");
+        }
+        return url;
+    }
+
+    private String getUsername() throws Exception {
+        String user = txtUser.getText();
+        if (user == null || user.isEmpty() || user.isBlank()) {
+            throw new Exception("Morate uneti korisnicko ime!");
+        }
+        return user;
+    }
+
+    private String getPassword() {
+        return String.valueOf(txtPassword.getPassword());
+    }
+
+    public void enableForm(boolean value) {
+        txtURL.setEnabled(value);
+        txtUser.setEnabled(value);
+        txtPassword.setEnabled(value);
+        btnOK.setEnabled(value);
+    }
 }

@@ -5,6 +5,7 @@
 package forms;
 
 import java.awt.CardLayout;
+import java.io.IOException;
 import panels.ConfigureDBPanel;
 import panels.ConfigurePortPanel;
 import panels.ConfigureServerPanel;
@@ -23,17 +24,18 @@ public class ServerForm extends javax.swing.JFrame {
     /**
      * Creates new form ServerForm
      */
-    public ServerForm() {
+    public ServerForm() throws IOException {
         initComponents();
         setVisible(true);
+        setLocationRelativeTo(null);
         this.cardLayout = new CardLayout();
-        this.configureServerPanel = new ConfigureServerPanel();
-        this.configureDBPanel = new ConfigureDBPanel();
-        this.configurePortPanel = new ConfigurePortPanel();
-        pnlMain.setLayout(cardLayout);
-        pnlMain.add(configureServerPanel, "configureServerPanel");
-        pnlMain.add(configureDBPanel, "configureDBPanel");
-        pnlMain.add(configurePortPanel, "configurePortPanel");
+        this.configureServerPanel = new ConfigureServerPanel(this);
+        this.configureDBPanel = new ConfigureDBPanel(this);
+        this.configurePortPanel = new ConfigurePortPanel(this);
+        mainPanel.setLayout(cardLayout);
+        mainPanel.add(configureServerPanel, "configureServerPanel");
+        mainPanel.add(configureDBPanel, "configureDBPanel");
+        mainPanel.add(configurePortPanel, "configurePortPanel");
     }
 
     /**
@@ -45,7 +47,7 @@ public class ServerForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlMain = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itemServer = new javax.swing.JMenuItem();
@@ -56,14 +58,14 @@ public class ServerForm extends javax.swing.JFrame {
         setTitle("Server form");
         setResizable(false);
 
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 404, Short.MAX_VALUE)
         );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 265, Short.MAX_VALUE)
         );
 
@@ -103,14 +105,14 @@ public class ServerForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -118,20 +120,29 @@ public class ServerForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemServerActionPerformed
-        cardLayout.show(pnlMain, "configureServerPanel");
+        cardLayout.show(mainPanel, "configureServerPanel");
     }//GEN-LAST:event_itemServerActionPerformed
 
     private void itemDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDBActionPerformed
-        cardLayout.show(pnlMain, "configureDBPanel");
+        cardLayout.show(mainPanel, "configureDBPanel");
     }//GEN-LAST:event_itemDBActionPerformed
 
     private void itemPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPortActionPerformed
-        cardLayout.show(pnlMain, "configurePortPanel");
+        cardLayout.show(mainPanel, "configurePortPanel");
     }//GEN-LAST:event_itemPortActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    public ConfigureServerPanel getConfigureServerPanel() {
+        return configureServerPanel;
+    }
+
+    public ConfigureDBPanel getConfigureDBPanel() {
+        return configureDBPanel;
+    }
+
+    public ConfigurePortPanel getConfigurePortPanel() {
+        return configurePortPanel;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itemDB;
@@ -139,6 +150,6 @@ public class ServerForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemServer;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel pnlMain;
+    private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }
