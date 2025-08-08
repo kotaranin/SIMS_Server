@@ -4,7 +4,7 @@
  */
 package server;
 
-import forms.ServerForm;
+import view.ServerForm;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

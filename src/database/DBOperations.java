@@ -4,27 +4,25 @@
  */
 package database;
 
-import repository.Repository;
-
 /**
  *
  * @author kotar
  */
-public interface DBRepository<T> extends Repository<T> {
+public interface DBOperations<T> extends AbstractBroker<T> {
 
-    default public void connect() throws Exception {
-        DBConnectionFactory.getInstance().getConnection();
+    default public void connect() {
+        DBConnection.getInstance().getConnection();
     }
 
     default public void disconnect() throws Exception {
-        DBConnectionFactory.getInstance().getConnection().close();
+        DBConnection.getInstance().getConnection().close();
     }
 
     default public void commit() throws Exception {
-        DBConnectionFactory.getInstance().getConnection().commit();
+        DBConnection.getInstance().getConnection().commit();
     }
 
     default public void rollback() throws Exception {
-        DBConnectionFactory.getInstance().getConnection().rollback();
+        DBConnection.getInstance().getConnection().rollback();
     }
 }

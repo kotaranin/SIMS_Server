@@ -4,6 +4,12 @@
  */
 package server_controller;
 
+import domain.Report;
+import domain.StudentOfficer;
+import java.util.List;
+import system_operations.GetAllReportsSO;
+import system_operations.LogInSO;
+
 /**
  *
  * @author kotar
@@ -20,6 +26,20 @@ public class ServerController {
             instance = new ServerController();
         }
         return instance;
+    }
+
+    public StudentOfficer logIn(StudentOfficer studentOfficer) throws Exception {
+        LogInSO logInSO = new LogInSO();
+        logInSO.execute(studentOfficer, null);
+        System.out.println("Controller Log in SO: " + logInSO.getStudentOfficer());
+        return logInSO.getStudentOfficer();
+    }
+
+    public List<Report> getAllReports() throws Exception {
+        GetAllReportsSO getAllReportsSO = new GetAllReportsSO();
+        getAllReportsSO.execute(new Report(), null);
+        System.out.println("Controller Get all reports SO: " + getAllReportsSO.getReports());
+        return getAllReportsSO.getReports();
     }
 
 }

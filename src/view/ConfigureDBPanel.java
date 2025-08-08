@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package panels;
+package view;
 
 import configuration.Configuration;
-import forms.ServerForm;
+import view.ServerForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +24,9 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         this.filled = false;
+        txtURL.setText(Configuration.getInstance().getProperty("url"));
+        txtUser.setText(Configuration.getInstance().getProperty("user"));
+        txtPassword.setText(Configuration.getInstance().getProperty("password"));
     }
 
     /**

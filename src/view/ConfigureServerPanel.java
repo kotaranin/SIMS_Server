@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package panels;
+package view;
 
 import configuration.Configuration;
-import forms.ServerForm;
+import view.ServerForm;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +42,7 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
         btnStartStop = new javax.swing.JToggleButton();
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStatus.setText("ZAUSTAVLJEN");
 
         btnStartStop.setText("Pokreni");
@@ -56,14 +57,13 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnStartStop)
-                        .addGap(163, 163, 163))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblStatus)
-                        .addGap(68, 68, 68))))
+                .addContainerGap(169, Short.MAX_VALUE)
+                .addComponent(btnStartStop)
+                .addGap(163, 163, 163))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,7 +79,6 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
     private void btnStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartStopActionPerformed
         try {
             if (btnStartStop.getText().equals("Zaustavi")) {
-                // zaustavi server, promeni labelu, promeni dugme, enable sve podforme, filled = false
                 serverThread.stopServer();
                 lblStatus.setText("ZAUSTAVLJEN");
                 btnStartStop.setText("Pokreni");

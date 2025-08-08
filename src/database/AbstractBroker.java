@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package repository;
+package database;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author kotar
  */
-public interface Repository<T> {
+public interface AbstractBroker<T> {
 
     public List<T> getAll(T parameter, String condition) throws Exception;
 

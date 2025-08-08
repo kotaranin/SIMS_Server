@@ -15,12 +15,22 @@ import java.util.logging.Logger;
  *
  * @author kotar
  */
-public class DBConnectionFactory {
+public class DBConnection {
 
-    private static DBConnectionFactory instance;
+    private static DBConnection instance;
     private Connection connection;
 
-    private DBConnectionFactory() {
+    private DBConnection() {
+    }
+
+    public static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
                 String url = Configuration.getInstance().getProperty("url");
@@ -30,18 +40,8 @@ public class DBConnectionFactory {
                 connection.setAutoCommit(false);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static DBConnectionFactory getInstance() {
-        if (instance == null) {
-            instance = new DBConnectionFactory();
-        }
-        return instance;
-    }
-
-    public Connection getConnection() {
         return connection;
     }
 
