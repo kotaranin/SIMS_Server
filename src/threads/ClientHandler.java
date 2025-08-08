@@ -4,6 +4,7 @@
  */
 package threads;
 
+import domain.Report;
 import domain.StudentOfficer;
 import enums.ResultType;
 import java.io.IOException;
@@ -49,8 +50,8 @@ public class ClientHandler extends Thread {
         switch (request.getOperation()) {
             case LOG_IN -> logIn(request, response);
             case GET_ALL_REPORTS -> getAllReports(request, response);
-            default ->
-                throw new AssertionError();
+            case DELETE_REPORT -> deleteReports(request, response);
+            default -> throw new AssertionError();
         }
         sender.send(response);
     }
@@ -75,6 +76,16 @@ public class ClientHandler extends Thread {
     private void getAllReports(Request request, Response response) {
         try {
             response.setArgument(serverController.getAllReports());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void deleteReports(Request request, Response response) {
+        try {
+            serverController.deleteReports((Report) request.getArgument());
             response.setResultType(ResultType.SUCCESS);
         } catch (Exception ex) {
             response.setException(ex);

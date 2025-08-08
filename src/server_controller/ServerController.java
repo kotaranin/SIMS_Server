@@ -7,6 +7,7 @@ package server_controller;
 import domain.Report;
 import domain.StudentOfficer;
 import java.util.List;
+import system_operations.DeleteReportSO;
 import system_operations.GetAllReportsSO;
 import system_operations.LogInSO;
 
@@ -40,6 +41,11 @@ public class ServerController {
         getAllReportsSO.execute(new Report(), null);
         System.out.println("Controller Get all reports SO: " + getAllReportsSO.getReports());
         return getAllReportsSO.getReports();
+    }
+
+    public void deleteReports(Report report) throws Exception {
+        DeleteReportSO deleteReportSO = new DeleteReportSO();
+        deleteReportSO.execute(report, null);
     }
 
 }
