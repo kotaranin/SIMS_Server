@@ -18,13 +18,25 @@ import controller.ServerController;
  * @author Uros
  */
 public class ClientHandler extends Thread {
-
+    
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
     private final ServerController serverController;
     private boolean end;
-
+    
+    @FunctionalInterface
+    private interface Supplier<T> {
+        
+        T get() throws Exception;
+    }
+    
+    @FunctionalInterface
+    private interface Action {
+        
+        void run() throws Exception;
+    }
+    
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.sender = new Sender(socket);
@@ -32,7 +44,7 @@ public class ClientHandler extends Thread {
         this.serverController = ServerController.getInstance();
         this.end = false;
     }
-
+    
     @Override
     public void run() {
         try {
@@ -43,7 +55,7 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void handleRequest(Request request) throws IOException {
         Response response = new Response();
         switch (request.getOperation()) {
@@ -68,128 +80,82 @@ public class ClientHandler extends Thread {
             case UPDATE_COUNTRY ->
                 updateCountry(request, response);
             case SEARCH_COUNTRIES ->
-                searchCoountries(request, response);
+                searchCountries(request, response);
             default ->
                 throw new AssertionError();
         }
         sender.send(response);
     }
-
+    
     public void disconnect() throws IOException {
         end = true;
         socket.close();
         sender.getOut().close();
         receiver.getIn().close();
     }
-
+    
+    private void executeWithResult(Response response, Supplier supplier) {
+        try {
+            response.setArgument(supplier.get());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+    
+    private void executeWithoutResult(Response response, Action action) {
+        try {
+            action.run();
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+    
     private void logIn(Request request, Response response) {
-        try {
-            response.setArgument(serverController.logIn((StudentOfficer) request.getArgument()));
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithResult(response, () -> serverController.logIn((StudentOfficer) request.getArgument()));
     }
-
+    
     private void getAllReports(Request request, Response response) {
-        try {
-            response.setArgument(serverController.getAllReports());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithResult(response, () -> serverController.getAllReports());
     }
-
+    
     private void deleteReport(Request request, Response response) {
-        try {
-            serverController.deleteReport((Report) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.deleteReport((Report) request.getArgument()));
     }
-
+    
     private void insertReport(Request request, Response response) {
-        try {
-            serverController.insertReport((Report) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.insertReport((Report) request.getArgument()));
     }
-
+    
     private void updateReport(Request request, Response response) {
-        try {
-            serverController.updateReport((Report) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.updateReport((Report) request.getArgument()));
     }
-
+    
     private void searchReports(Request request, Response response) {
-        try {
-            response.setArgument(serverController.searchReports((String) request.getArgument()));
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithResult(response, () -> serverController.searchReports((String) request.getArgument()));
     }
-
+    
     private void getAllCountries(Request request, Response response) {
-        try {
-            response.setArgument(serverController.getAllCountries());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithResult(response, () -> serverController.getAllCountries());
     }
-
+    
     private void deleteCountry(Request request, Response response) {
-        try {
-            serverController.deleteCountry((Country) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.deleteCountry((Country) request.getArgument()));
     }
-
+    
     private void insertCountry(Request request, Response response) {
-        try {
-            serverController.insertCountry((Country) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.insertCountry((Country) request.getArgument()));
     }
-
+    
     private void updateCountry(Request request, Response response) {
-        try {
-            serverController.updateCountry((Country) request.getArgument());
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+        executeWithoutResult(response, () -> serverController.updateCountry((Country) request.getArgument()));
     }
-
-    private void searchCoountries(Request request, Response response) {
-        try {
-            response.setArgument(serverController.searchCountries((String) request.getArgument()));
-            response.setResultType(ResultType.SUCCESS);
-        } catch (Exception ex) {
-            response.setException(ex);
-            response.setResultType(ResultType.FAIL);
-        }
+    
+    private void searchCountries(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchCountries((String) request.getArgument()));
     }
-
+    
 }
