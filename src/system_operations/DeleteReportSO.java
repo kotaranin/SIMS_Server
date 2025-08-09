@@ -19,7 +19,7 @@ public class DeleteReportSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String key) throws Exception {
+    protected void executeOperation(Object parameter, String condition) throws Exception {
         genericBroker.delete((Report) parameter);
     }
     

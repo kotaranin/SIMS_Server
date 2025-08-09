@@ -22,7 +22,7 @@ public class InsertReportSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String key) throws Exception {
+    protected void executeOperation(Object parameter, String condition) throws Exception {
         genericBroker.insert((Report) parameter);
     }
     

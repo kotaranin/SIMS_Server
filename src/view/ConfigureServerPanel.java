@@ -5,7 +5,7 @@
 package view;
 
 import configuration.Configuration;
-import view.ServerForm;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +42,7 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
         btnStartStop = new javax.swing.JToggleButton();
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblStatus.setForeground(new java.awt.Color(255, 0, 0));
         lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStatus.setText("ZAUSTAVLJEN");
 
@@ -81,6 +82,7 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
             if (btnStartStop.getText().equals("Zaustavi")) {
                 serverThread.stopServer();
                 lblStatus.setText("ZAUSTAVLJEN");
+                lblStatus.setForeground(Color.RED);
                 btnStartStop.setText("Pokreni");
                 parent.getConfigureDBPanel().enableForm(true);
                 parent.getConfigureDBPanel().setFilled(false);
@@ -99,6 +101,7 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
             serverThread = new ServerThread(Integer.parseInt(Configuration.getInstance().getProperty("port")));
             serverThread.start();
             lblStatus.setText("POKRENUT");
+            lblStatus.setForeground(Color.GREEN);
             btnStartStop.setText("Zaustavi");
         } catch (IOException ex) {
             Logger.getLogger(ConfigureServerPanel.class.getName()).log(Level.SEVERE, null, ex);

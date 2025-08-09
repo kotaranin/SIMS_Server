@@ -4,31 +4,30 @@
  */
 package system_operations;
 
-import domain.Report;
+import domain.Country;
 import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class SearchReportsSO extends AbstractSO {
+public class SearchCountriesSO extends AbstractSO {
 
-    private List<Report> reports;
+    private List<Country> countries;
 
-    public List<Report> getReports() {
-        return reports;
+    public List<Country> getCountries() {
+        return countries;
     }
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Report)) {
-            throw new Exception("Sistem ne moze da nadje dnevnik prakse.");
-        }
+        if (parameter == null || !(parameter instanceof Country))
+            throw new Exception("Sistem ne moze da nadje drzavu.");
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        reports = genericBroker.getAll((Report) parameter, condition);
+        countries = genericBroker.getAll((Country) parameter, condition);
     }
 
 }

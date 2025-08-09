@@ -24,7 +24,7 @@ public class UpdateReportSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String key) throws Exception {
+    protected void executeOperation(Object parameter, String condition) throws Exception {
         genericBroker.update((Report) parameter);
     }
 

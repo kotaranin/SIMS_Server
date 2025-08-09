@@ -4,28 +4,27 @@
  */
 package threads;
 
-import domain.Report;
-import domain.StudentOfficer;
+import domain.*;
 import enums.ResultType;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.*;
-import server_controller.ServerController;
+import controller.ServerController;
 
 /**
  *
  * @author Uros
  */
 public class ClientHandler extends Thread {
-    
+
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
     private final ServerController serverController;
     private boolean end;
-    
+
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.sender = new Sender(socket);
@@ -33,7 +32,7 @@ public class ClientHandler extends Thread {
         this.serverController = ServerController.getInstance();
         this.end = false;
     }
-    
+
     @Override
     public void run() {
         try {
@@ -44,28 +43,45 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void handleRequest(Request request) throws IOException {
         Response response = new Response();
         switch (request.getOperation()) {
-            case LOG_IN -> logIn(request, response);
-            case GET_ALL_REPORTS -> getAllReports(request, response);
-            case DELETE_REPORT -> deleteReport(request, response);
-            case INSERT_REPORT -> insertReport(request, response);
-            case UPDATE_REPORT -> updateReport(request, response);
-            case SEARCH_REPORTS -> searchReports(request, response);
-            default -> throw new AssertionError();
+            case LOG_IN ->
+                logIn(request, response);
+            case GET_ALL_REPORTS ->
+                getAllReports(request, response);
+            case DELETE_REPORT ->
+                deleteReport(request, response);
+            case INSERT_REPORT ->
+                insertReport(request, response);
+            case UPDATE_REPORT ->
+                updateReport(request, response);
+            case SEARCH_REPORTS ->
+                searchReports(request, response);
+            case GET_ALL_COUNTRIES ->
+                getAllCountries(request, response);
+            case DELETE_COUNTRY ->
+                deleteCountry(request, response);
+            case INSERT_COUNTRY ->
+                insertCountry(request, response);
+            case UPDATE_COUNTRY ->
+                updateCountry(request, response);
+            case SEARCH_COUNTRIES ->
+                searchCoountries(request, response);
+            default ->
+                throw new AssertionError();
         }
         sender.send(response);
     }
-    
+
     public void disconnect() throws IOException {
         end = true;
         socket.close();
         sender.getOut().close();
         receiver.getIn().close();
     }
-    
+
     private void logIn(Request request, Response response) {
         try {
             response.setArgument(serverController.logIn((StudentOfficer) request.getArgument()));
@@ -125,5 +141,55 @@ public class ClientHandler extends Thread {
             response.setResultType(ResultType.FAIL);
         }
     }
-    
+
+    private void getAllCountries(Request request, Response response) {
+        try {
+            response.setArgument(serverController.getAllCountries());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void deleteCountry(Request request, Response response) {
+        try {
+            serverController.deleteCountry((Country) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void insertCountry(Request request, Response response) {
+        try {
+            serverController.insertCountry((Country) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void updateCountry(Request request, Response response) {
+        try {
+            serverController.updateCountry((Country) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void searchCoountries(Request request, Response response) {
+        try {
+            response.setArgument(serverController.searchCountries((String) request.getArgument()));
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
 }

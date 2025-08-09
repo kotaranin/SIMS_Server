@@ -47,6 +47,7 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     @Override
     public void update(AbstractDO parameter) throws Exception {
         String query = "UPDATE " + parameter.getTable() + " SET " + parameter.getUpdateParameters() + " WHERE " + parameter.getPrimaryKey();
+        System.out.println(query);
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
         parameter.prepareStatement(preparedStatement);
         preparedStatement.executeUpdate();
@@ -56,6 +57,7 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     @Override
     public void delete(AbstractDO parameter) throws Exception {
         String query = "DELETE FROM " + parameter.getTable() + " WHERE " + parameter.getPrimaryKey();
+        System.out.println(query);
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
         preparedStatement.executeUpdate();
         preparedStatement.close();

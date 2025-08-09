@@ -21,11 +21,13 @@ public class GetAllReportsSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-
+        if (parameter == null || !(parameter instanceof Report)) {
+            throw new Exception("Sistem ne moze da vrati sve dnevnike prakse.");
+        }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String key) throws Exception {
+    protected void executeOperation(Object parameter, String condition) throws Exception {
         reports = genericBroker.getAll((Report) parameter, null);
     }
 
