@@ -50,7 +50,10 @@ public class ClientHandler extends Thread {
         switch (request.getOperation()) {
             case LOG_IN -> logIn(request, response);
             case GET_ALL_REPORTS -> getAllReports(request, response);
-            case DELETE_REPORT -> deleteReports(request, response);
+            case DELETE_REPORT -> deleteReport(request, response);
+            case INSERT_REPORT -> insertReport(request, response);
+            case UPDATE_REPORT -> updateReport(request, response);
+            case SEARCH_REPORTS -> searchReports(request, response);
             default -> throw new AssertionError();
         }
         sender.send(response);
@@ -83,9 +86,39 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void deleteReports(Request request, Response response) {
+    private void deleteReport(Request request, Response response) {
         try {
-            serverController.deleteReports((Report) request.getArgument());
+            serverController.deleteReport((Report) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void insertReport(Request request, Response response) {
+        try {
+            serverController.insertReport((Report) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void updateReport(Request request, Response response) {
+        try {
+            serverController.updateReport((Report) request.getArgument());
+            response.setResultType(ResultType.SUCCESS);
+        } catch (Exception ex) {
+            response.setException(ex);
+            response.setResultType(ResultType.FAIL);
+        }
+    }
+
+    private void searchReports(Request request, Response response) {
+        try {
+            response.setArgument(serverController.searchReports((String) request.getArgument()));
             response.setResultType(ResultType.SUCCESS);
         } catch (Exception ex) {
             response.setException(ex);

@@ -10,17 +10,20 @@ import domain.Report;
  *
  * @author kotar
  */
-public class DeleteReportSO extends AbstractSO {
+public class InsertReportSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
         if (parameter == null || !(parameter instanceof Report))
-            throw new Exception("Sistem ne moze da obrise dnevnik prakse.");
+            throw new Exception("Sistem ne moze da kreira dnevnik prakse.");
+        Report report = (Report) parameter;
+        if (report.getFileName() == null || report.getFileName().isEmpty() || report.getFileContent() == null)
+            throw new Exception("Sistem ne moze da kreira dnevnik prakse.");
     }
 
     @Override
     protected void executeOperation(Object parameter, String key) throws Exception {
-        genericBroker.delete((Report) parameter);
+        genericBroker.insert((Report) parameter);
     }
     
 }

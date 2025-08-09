@@ -9,7 +9,10 @@ import domain.StudentOfficer;
 import java.util.List;
 import system_operations.DeleteReportSO;
 import system_operations.GetAllReportsSO;
+import system_operations.InsertReportSO;
 import system_operations.LogInSO;
+import system_operations.SearchReportsSO;
+import system_operations.UpdateReportSO;
 
 /**
  *
@@ -32,20 +35,34 @@ public class ServerController {
     public StudentOfficer logIn(StudentOfficer studentOfficer) throws Exception {
         LogInSO logInSO = new LogInSO();
         logInSO.execute(studentOfficer, null);
-        System.out.println("Controller Log in SO: " + logInSO.getStudentOfficer());
         return logInSO.getStudentOfficer();
     }
 
     public List<Report> getAllReports() throws Exception {
         GetAllReportsSO getAllReportsSO = new GetAllReportsSO();
         getAllReportsSO.execute(new Report(), null);
-        System.out.println("Controller Get all reports SO: " + getAllReportsSO.getReports());
         return getAllReportsSO.getReports();
     }
 
-    public void deleteReports(Report report) throws Exception {
+    public void deleteReport(Report report) throws Exception {
         DeleteReportSO deleteReportSO = new DeleteReportSO();
         deleteReportSO.execute(report, null);
+    }
+
+    public void insertReport(Report report) throws Exception {
+        InsertReportSO insertReportSO = new InsertReportSO();
+        insertReportSO.execute(report, null);
+    }
+
+    public void updateReport(Report report) throws Exception {
+        UpdateReportSO updateReportSO = new UpdateReportSO();
+        updateReportSO.execute(report, null);
+    }
+
+    public List<Report> searchReports(String condition) throws Exception {
+        SearchReportsSO searchReportsSO = new SearchReportsSO();
+        searchReportsSO.execute(new Report(), condition);
+        return searchReportsSO.getReports();
     }
 
 }

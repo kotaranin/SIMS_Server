@@ -36,10 +36,11 @@ public class GenericBroker implements DBOperations<AbstractDO> {
 
     @Override
     public void insert(AbstractDO parameter) throws Exception {
-        String query = "INSERT INTO " + parameter.getTable() + " (" + parameter.getInsertParameters() + ") VALUES (" + parameter.getInsertParameters() + ")";
+        String query = "INSERT INTO " + parameter.getTable() + " (" + parameter.getInsertColumns() + ") VALUES (" + parameter.getInsertParameters() + ")";
+        System.out.println(query);
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
-        parameter.prepareInsertStatement(preparedStatement);
-        preparedStatement.executeUpdate(query);
+        parameter.prepareStatement(preparedStatement);
+        preparedStatement.executeUpdate();
         preparedStatement.close();
     }
 
@@ -47,8 +48,8 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     public void update(AbstractDO parameter) throws Exception {
         String query = "UPDATE " + parameter.getTable() + " SET " + parameter.getUpdateParameters() + " WHERE " + parameter.getPrimaryKey();
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
-        parameter.prepareUpdateStatement(preparedStatement);
-        preparedStatement.executeUpdate(query);
+        parameter.prepareStatement(preparedStatement);
+        preparedStatement.executeUpdate();
         preparedStatement.close();
     }
 
@@ -56,7 +57,7 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     public void delete(AbstractDO parameter) throws Exception {
         String query = "DELETE FROM " + parameter.getTable() + " WHERE " + parameter.getPrimaryKey();
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
-        preparedStatement.executeUpdate(query);
+        preparedStatement.executeUpdate();
         preparedStatement.close();
     }
 

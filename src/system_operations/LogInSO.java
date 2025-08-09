@@ -22,7 +22,8 @@ public class LogInSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws SQLException, Exception {
-        System.out.println("Unsupported preconditions in Log in SO");
+        if (parameter == null || !(parameter instanceof StudentOfficer))
+            throw new Exception("Sistem ne moze da uloguje korisnika.");
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LogInSO extends AbstractSO {
                 return;
             }
         }
-        throw new Exception("Pogresno korisnicko ime ili lozinka!");
+        throw new Exception("Imejl ili lozinka nisu isrpavni.");
     }
 
 }

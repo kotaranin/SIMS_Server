@@ -5,22 +5,30 @@
 package system_operations;
 
 import domain.Report;
+import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class DeleteReportSO extends AbstractSO {
+public class SearchReportsSO extends AbstractSO {
+
+    private List<Report> reports;
+
+    public List<Report> getReports() {
+        return reports;
+    }
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Report))
-            throw new Exception("Sistem ne moze da obrise dnevnik prakse.");
+        if (parameter == null || !(parameter instanceof Report)) {
+            throw new Exception("Sistem ne moze da kreira dnevnik prakse.");
+        }
     }
 
     @Override
     protected void executeOperation(Object parameter, String key) throws Exception {
-        genericBroker.delete((Report) parameter);
+        reports = genericBroker.getAll((Report) parameter, key);
     }
-    
+
 }

@@ -162,9 +162,9 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
     }
 
     public void enableForm(boolean value) {
-        txtURL.setEnabled(value);
-        txtUser.setEnabled(value);
-        txtPassword.setEnabled(value);
+        txtURL.setEditable(value);
+        txtUser.setEditable(value);
+        txtPassword.setEditable(value);
         btnOK.setEnabled(value);
     }
 }

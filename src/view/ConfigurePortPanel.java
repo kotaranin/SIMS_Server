@@ -108,7 +108,7 @@ public class ConfigurePortPanel extends javax.swing.JPanel {
     }
 
     public void enableForm(boolean value) {
-        txtPort.setEnabled(value);
+        txtPort.setEditable(value);
         btnOK.setEnabled(value);
     }
 
