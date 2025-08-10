@@ -18,25 +18,13 @@ import controller.ServerController;
  * @author Uros
  */
 public class ClientHandler extends Thread {
-    
+
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
     private final ServerController serverController;
     private boolean end;
-    
-    @FunctionalInterface
-    private interface Supplier<T> {
-        
-        T get() throws Exception;
-    }
-    
-    @FunctionalInterface
-    private interface Action {
-        
-        void run() throws Exception;
-    }
-    
+
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.sender = new Sender(socket);
@@ -44,7 +32,7 @@ public class ClientHandler extends Thread {
         this.serverController = ServerController.getInstance();
         this.end = false;
     }
-    
+
     @Override
     public void run() {
         try {
@@ -55,7 +43,7 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void handleRequest(Request request) throws IOException {
         Response response = new Response();
         switch (request.getOperation()) {
@@ -81,19 +69,29 @@ public class ClientHandler extends Thread {
                 updateCountry(request, response);
             case SEARCH_COUNTRIES ->
                 searchCountries(request, response);
+            case GET_ALL_EXAM_PERIODS ->
+                getAllExamPeriods(request, response);
+            case DELETE_EXAM_PERIOD ->
+                deleteExamPeriod(request, response);
+            case INSERT_EXAM_PERIOD ->
+                insertExamPeriod(request, response);
+            case UPDATE_EXAM_PERIOD ->
+                updateExamPeriod(request, response);
+            case SEARCH_EXAM_PERIODS ->
+                searchExamPeriod(request, response);
             default ->
                 throw new AssertionError();
         }
         sender.send(response);
     }
-    
+
     public void disconnect() throws IOException {
         end = true;
         socket.close();
         sender.getOut().close();
         receiver.getIn().close();
     }
-    
+
     private void executeWithResult(Response response, Supplier supplier) {
         try {
             response.setArgument(supplier.get());
@@ -103,7 +101,7 @@ public class ClientHandler extends Thread {
             response.setResultType(ResultType.FAIL);
         }
     }
-    
+
     private void executeWithoutResult(Response response, Action action) {
         try {
             action.run();
@@ -113,49 +111,81 @@ public class ClientHandler extends Thread {
             response.setResultType(ResultType.FAIL);
         }
     }
-    
+
     private void logIn(Request request, Response response) {
         executeWithResult(response, () -> serverController.logIn((StudentOfficer) request.getArgument()));
     }
-    
+
     private void getAllReports(Request request, Response response) {
         executeWithResult(response, () -> serverController.getAllReports());
     }
-    
+
     private void deleteReport(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.deleteReport((Report) request.getArgument()));
     }
-    
+
     private void insertReport(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.insertReport((Report) request.getArgument()));
     }
-    
+
     private void updateReport(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateReport((Report) request.getArgument()));
     }
-    
+
     private void searchReports(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchReports((String) request.getArgument()));
     }
-    
+
     private void getAllCountries(Request request, Response response) {
         executeWithResult(response, () -> serverController.getAllCountries());
     }
-    
+
     private void deleteCountry(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.deleteCountry((Country) request.getArgument()));
     }
-    
+
     private void insertCountry(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.insertCountry((Country) request.getArgument()));
     }
-    
+
     private void updateCountry(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateCountry((Country) request.getArgument()));
     }
-    
+
     private void searchCountries(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchCountries((String) request.getArgument()));
     }
-    
+
+    private void getAllExamPeriods(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getAllExamPeriods());
+    }
+
+    private void deleteExamPeriod(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.deleteExamPeriod(((ExamPeriod) request.getArgument())));
+    }
+
+    private void insertExamPeriod(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertExamPeriod((ExamPeriod) request.getArgument()));
+    }
+
+    private void updateExamPeriod(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateExamPeriod((ExamPeriod) request.getArgument()));
+    }
+
+    private void searchExamPeriod(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchExamPeriods((String) request.getArgument()));
+    }
+
+    @FunctionalInterface
+    private interface Supplier<T> {
+
+        T get() throws Exception;
+    }
+
+    @FunctionalInterface
+    private interface Action {
+
+        void run() throws Exception;
+    }
+
 }

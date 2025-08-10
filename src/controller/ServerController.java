@@ -5,19 +5,25 @@
 package controller;
 
 import domain.Country;
+import domain.ExamPeriod;
 import domain.Report;
 import domain.StudentOfficer;
 import java.util.List;
 import system_operations.DeleteCountrySO;
+import system_operations.DeleteExamPeriodSO;
 import system_operations.DeleteReportSO;
 import system_operations.GetAllCountriesSO;
+import system_operations.GetAllExamPeriodsSO;
 import system_operations.GetAllReportsSO;
 import system_operations.InsertCountrySO;
+import system_operations.InsertExamPeriodSO;
 import system_operations.InsertReportSO;
 import system_operations.LogInSO;
 import system_operations.SearchCountriesSO;
+import system_operations.SearchExamPeriodsSO;
 import system_operations.SearchReportsSO;
 import system_operations.UpdateCountrySO;
+import system_operations.UpdateExamPeriodSO;
 import system_operations.UpdateReportSO;
 
 /**
@@ -96,6 +102,33 @@ public class ServerController {
         SearchCountriesSO searchCountriesSO = new SearchCountriesSO();
         searchCountriesSO.execute(new Country(), condition);
         return searchCountriesSO.getCountries();
+    }
+
+    public List<ExamPeriod> getAllExamPeriods() throws Exception {
+        GetAllExamPeriodsSO getAllExamPeriodsSO = new GetAllExamPeriodsSO();
+        getAllExamPeriodsSO.execute(new ExamPeriod(), null);
+        return getAllExamPeriodsSO.getExamPeriods();
+    }
+
+    public void deleteExamPeriod(ExamPeriod examPeriod) throws Exception {
+        DeleteExamPeriodSO deleteExamPeriodSO = new DeleteExamPeriodSO();
+        deleteExamPeriodSO.execute(examPeriod, null);
+    }
+
+    public void insertExamPeriod(ExamPeriod examPeriod) throws Exception {
+        InsertExamPeriodSO insertExamPeriodSO = new InsertExamPeriodSO();
+        insertExamPeriodSO.execute(examPeriod, null);
+    }
+
+    public void updateExamPeriod(ExamPeriod examPeriod) throws Exception {
+        UpdateExamPeriodSO updateExamPeriodSO = new UpdateExamPeriodSO();
+        updateExamPeriodSO.execute(examPeriod, null);
+    }
+
+    public List<ExamPeriod> searchExamPeriods(String condition) throws Exception {
+        SearchExamPeriodsSO searchExamPeriodsSO = new SearchExamPeriodsSO();
+        searchExamPeriodsSO.execute(new ExamPeriod(), condition);
+        return searchExamPeriodsSO.getExamPeriods();
     }
 
 }
