@@ -4,27 +4,29 @@
  */
 package controller;
 
-import domain.Country;
-import domain.ExamPeriod;
-import domain.Report;
-import domain.StudentOfficer;
+import domain.*;
 import java.util.List;
 import system_operations.DeleteCountrySO;
 import system_operations.DeleteExamPeriodSO;
 import system_operations.DeleteReportSO;
+import system_operations.DeleteTeacherSO;
 import system_operations.GetAllCountriesSO;
 import system_operations.GetAllExamPeriodsSO;
 import system_operations.GetAllReportsSO;
+import system_operations.GetAllTeachersSO;
 import system_operations.InsertCountrySO;
 import system_operations.InsertExamPeriodSO;
 import system_operations.InsertReportSO;
+import system_operations.InsertTeacherSO;
 import system_operations.LogInSO;
 import system_operations.SearchCountriesSO;
 import system_operations.SearchExamPeriodsSO;
 import system_operations.SearchReportsSO;
+import system_operations.SearchTeachersSO;
 import system_operations.UpdateCountrySO;
 import system_operations.UpdateExamPeriodSO;
 import system_operations.UpdateReportSO;
+import system_operations.UpdateTeacherSO;
 
 /**
  *
@@ -129,6 +131,33 @@ public class ServerController {
         SearchExamPeriodsSO searchExamPeriodsSO = new SearchExamPeriodsSO();
         searchExamPeriodsSO.execute(new ExamPeriod(), condition);
         return searchExamPeriodsSO.getExamPeriods();
+    }
+
+    public List<Teacher> getAllTeachers() throws Exception {
+        GetAllTeachersSO getAllTeachersSO = new GetAllTeachersSO();
+        getAllTeachersSO.execute(new Teacher(), null);
+        return getAllTeachersSO.getTeachers();
+    }
+
+    public void deleteTeacher(Teacher teacher) throws Exception {
+        DeleteTeacherSO deleteTeacherSO = new DeleteTeacherSO();
+        deleteTeacherSO.execute(teacher, null);
+    }
+
+    public void insertTeacher(Teacher teacher) throws Exception {
+        InsertTeacherSO insertTeacherSO = new InsertTeacherSO();
+        insertTeacherSO.execute(teacher, null);
+    }
+
+    public void updateTeacher(Teacher teacher) throws Exception {
+        UpdateTeacherSO updateTeacherSO = new UpdateTeacherSO();
+        updateTeacherSO.execute(teacher, null);
+    }
+
+    public List<Teacher> searchTeachers(String condition) throws Exception {
+        SearchTeachersSO searchTeachersSO = new SearchTeachersSO();
+        searchTeachersSO.execute(new Teacher(), condition);
+        return searchTeachersSO.getTeachers();
     }
 
 }

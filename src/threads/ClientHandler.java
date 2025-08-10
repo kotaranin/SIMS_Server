@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
             case LOG_IN ->
                 logIn(request, response);
             case GET_ALL_REPORTS ->
-                getAllReports(request, response);
+                getAllReports( response);
             case DELETE_REPORT ->
                 deleteReport(request, response);
             case INSERT_REPORT ->
@@ -60,7 +60,7 @@ public class ClientHandler extends Thread {
             case SEARCH_REPORTS ->
                 searchReports(request, response);
             case GET_ALL_COUNTRIES ->
-                getAllCountries(request, response);
+                getAllCountries(response);
             case DELETE_COUNTRY ->
                 deleteCountry(request, response);
             case INSERT_COUNTRY ->
@@ -70,7 +70,7 @@ public class ClientHandler extends Thread {
             case SEARCH_COUNTRIES ->
                 searchCountries(request, response);
             case GET_ALL_EXAM_PERIODS ->
-                getAllExamPeriods(request, response);
+                getAllExamPeriods(response);
             case DELETE_EXAM_PERIOD ->
                 deleteExamPeriod(request, response);
             case INSERT_EXAM_PERIOD ->
@@ -79,6 +79,16 @@ public class ClientHandler extends Thread {
                 updateExamPeriod(request, response);
             case SEARCH_EXAM_PERIODS ->
                 searchExamPeriod(request, response);
+            case GET_ALL_TEACHERS ->
+                getAllTeachers(response);
+            case DELETE_TEACHER ->
+                deleteTeacher(request, response);
+            case INSERT_TEACHER ->
+                insertTeacher(request, response);
+            case UPDATE_TEACHER ->
+                updateTeacher(request, response);
+            case SEARCH_TEACHERS ->
+                searchTeachers(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -116,7 +126,7 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.logIn((StudentOfficer) request.getArgument()));
     }
 
-    private void getAllReports(Request request, Response response) {
+    private void getAllReports(Response response) {
         executeWithResult(response, () -> serverController.getAllReports());
     }
 
@@ -136,7 +146,7 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.searchReports((String) request.getArgument()));
     }
 
-    private void getAllCountries(Request request, Response response) {
+    private void getAllCountries(Response response) {
         executeWithResult(response, () -> serverController.getAllCountries());
     }
 
@@ -156,7 +166,7 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.searchCountries((String) request.getArgument()));
     }
 
-    private void getAllExamPeriods(Request request, Response response) {
+    private void getAllExamPeriods(Response response) {
         executeWithResult(response, () -> serverController.getAllExamPeriods());
     }
 
@@ -174,6 +184,26 @@ public class ClientHandler extends Thread {
 
     private void searchExamPeriod(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchExamPeriods((String) request.getArgument()));
+    }
+
+    private void getAllTeachers(Response response) {
+        executeWithResult(response, () -> serverController.getAllTeachers());
+    }
+
+    private void deleteTeacher(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.deleteTeacher((Teacher) request.getArgument()));
+    }
+
+    private void insertTeacher(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertTeacher((Teacher) request.getArgument()));
+    }
+
+    private void updateTeacher(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateTeacher((Teacher) request.getArgument()));
+    }
+
+    private void searchTeachers(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchTeachers((String) request.getArgument()));
     }
 
     @FunctionalInterface
