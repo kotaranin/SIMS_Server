@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
             case LOG_IN ->
                 logIn(request, response);
             case GET_ALL_REPORTS ->
-                getAllReports( response);
+                getAllReports(response);
             case DELETE_REPORT ->
                 deleteReport(request, response);
             case INSERT_REPORT ->
@@ -89,6 +89,16 @@ public class ClientHandler extends Thread {
                 updateTeacher(request, response);
             case SEARCH_TEACHERS ->
                 searchTeachers(request, response);
+            case GET_ALL_STUDY_LEVELS ->
+                getAllStudyLevels(response);
+            case DELETE_STUDY_LEVEL ->
+                deleteStudyLevel(request, response);
+            case INSERT_STUDY_LEVEL ->
+                insertStudyLevel(request, response);
+            case UPDATE_STUDY_LEVEL ->
+                updateStudyLevel(request, response);
+            case SEARCH_STUDY_LEVEL ->
+                searchStudyLevel(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -204,6 +214,26 @@ public class ClientHandler extends Thread {
 
     private void searchTeachers(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchTeachers((String) request.getArgument()));
+    }
+
+    private void getAllStudyLevels(Response response) {
+        executeWithResult(response, () -> serverController.getAllStudyLevels());
+    }
+
+    private void deleteStudyLevel(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.deleteStudyLevel((StudyLevel) request.getArgument()));
+    }
+
+    private void insertStudyLevel(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertStudyLevel((StudyLevel) request.getArgument()));
+    }
+
+    private void updateStudyLevel(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateStudyLevel((StudyLevel) request.getArgument()));
+    }
+
+    private void searchStudyLevel(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchStudyLevels((String) request.getArgument()));
     }
 
     @FunctionalInterface

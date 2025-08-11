@@ -9,23 +9,28 @@ import java.util.List;
 import system_operations.DeleteCountrySO;
 import system_operations.DeleteExamPeriodSO;
 import system_operations.DeleteReportSO;
+import system_operations.DeleteStudyLevelSO;
 import system_operations.DeleteTeacherSO;
 import system_operations.GetAllCountriesSO;
 import system_operations.GetAllExamPeriodsSO;
 import system_operations.GetAllReportsSO;
+import system_operations.GetAllStudyLevelsSO;
 import system_operations.GetAllTeachersSO;
 import system_operations.InsertCountrySO;
 import system_operations.InsertExamPeriodSO;
 import system_operations.InsertReportSO;
+import system_operations.InsertStudyLevelSO;
 import system_operations.InsertTeacherSO;
 import system_operations.LogInSO;
 import system_operations.SearchCountriesSO;
 import system_operations.SearchExamPeriodsSO;
 import system_operations.SearchReportsSO;
+import system_operations.SearchStudyLevelsSO;
 import system_operations.SearchTeachersSO;
 import system_operations.UpdateCountrySO;
 import system_operations.UpdateExamPeriodSO;
 import system_operations.UpdateReportSO;
+import system_operations.UpdateStudyLevelSO;
 import system_operations.UpdateTeacherSO;
 
 /**
@@ -158,6 +163,33 @@ public class ServerController {
         SearchTeachersSO searchTeachersSO = new SearchTeachersSO();
         searchTeachersSO.execute(new Teacher(), condition);
         return searchTeachersSO.getTeachers();
+    }
+
+    public List<StudyLevel> getAllStudyLevels() throws Exception {
+        GetAllStudyLevelsSO getAllStudyLevelsSO = new GetAllStudyLevelsSO();
+        getAllStudyLevelsSO.execute(new StudyLevel(), null);
+        return getAllStudyLevelsSO.getStudyLevels();
+    }
+
+    public void deleteStudyLevel(StudyLevel studyLevel) throws Exception {
+        DeleteStudyLevelSO deleteStudyLevelSO = new DeleteStudyLevelSO();
+        deleteStudyLevelSO.execute(studyLevel, null);
+    }
+
+    public void insertStudyLevel(StudyLevel studyLevel) throws Exception {
+        InsertStudyLevelSO insertStudyLevelSO = new InsertStudyLevelSO();
+        insertStudyLevelSO.execute(studyLevel, null);
+    }
+
+    public void updateStudyLevel(StudyLevel studyLevel) throws Exception {
+        UpdateStudyLevelSO updateStudyLevelSO = new UpdateStudyLevelSO();
+        updateStudyLevelSO.execute(studyLevel, null);
+    }
+
+    public List<StudyLevel> searchStudyLevels(String condition) throws Exception {
+        SearchStudyLevelsSO searchStudyLevelsSO = new SearchStudyLevelsSO();
+        searchStudyLevelsSO.execute(new StudyLevel(), condition);
+        return searchStudyLevelsSO.getStudyLevels();
     }
 
 }
