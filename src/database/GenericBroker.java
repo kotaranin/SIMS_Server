@@ -5,6 +5,7 @@
 package database;
 
 import java.util.List;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import domain.AbstractDO;
@@ -35,13 +36,20 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     }
 
     @Override
-    public void insert(AbstractDO parameter) throws Exception {
+    public Long insert(AbstractDO parameter) throws Exception {
         String query = "INSERT INTO " + parameter.getTable() + " (" + parameter.getInsertColumns() + ") VALUES (" + parameter.getInsertParameters() + ")";
         System.out.println(query);
-        PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         parameter.prepareStatement(preparedStatement);
         preparedStatement.executeUpdate();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        long id = -1;
+        if (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        resultSet.close();
         preparedStatement.close();
+        return id;
     }
 
     @Override

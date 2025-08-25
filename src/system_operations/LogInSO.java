@@ -29,7 +29,6 @@ public class LogInSO extends AbstractSO {
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
         List<StudentOfficer> studentOfficers = genericBroker.getAll((StudentOfficer) parameter, " JOIN study_level ON student_officer.id_study_level = study_level.id_study_level");
-        System.out.println("Log in SO: " + studentOfficers);
         for (StudentOfficer s : studentOfficers) {
             if (s.equals((StudentOfficer) parameter)) {
                 studentOfficer = s;

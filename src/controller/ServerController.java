@@ -11,6 +11,7 @@ import system_operations.DeleteExamPeriodSO;
 import system_operations.DeleteReportSO;
 import system_operations.DeleteStudyLevelSO;
 import system_operations.DeleteTeacherSO;
+import system_operations.GetAllCitiesSO;
 import system_operations.GetAllCountriesSO;
 import system_operations.GetAllExamPeriodsSO;
 import system_operations.GetAllReportsSO;
@@ -190,6 +191,12 @@ public class ServerController {
         SearchStudyLevelsSO searchStudyLevelsSO = new SearchStudyLevelsSO();
         searchStudyLevelsSO.execute(new StudyLevel(), condition);
         return searchStudyLevelsSO.getStudyLevels();
+    }
+
+    public List<City> getAllCities(Country country) throws Exception {
+        GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
+        getAllCitiesSO.execute(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
+        return getAllCitiesSO.getCities();
     }
 
 }

@@ -4,7 +4,9 @@
  */
 package system_operations;
 
+import domain.City;
 import domain.Country;
+import java.util.List;
 
 /**
  *
@@ -25,7 +27,19 @@ public class UpdateCountrySO extends AbstractSO {
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.update((Country) parameter);
+        Country country = (Country) parameter;
+        GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
+        getAllCitiesSO.executeOperation(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
+        List<City> oldCities = getAllCitiesSO.getCities();
+        genericBroker.update(country);
+        for (City oldCity : oldCities) {
+            genericBroker.delete(oldCity);
+        }
+        List<City> newCities = country.getCities();
+        for (City newCity : newCities) {
+            newCity.setCountry(country);
+            genericBroker.insert(newCity);
+        }
     }
 
 }

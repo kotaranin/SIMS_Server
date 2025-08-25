@@ -99,6 +99,8 @@ public class ClientHandler extends Thread {
                 updateStudyLevel(request, response);
             case SEARCH_STUDY_LEVEL ->
                 searchStudyLevel(request, response);
+            case GET_ALL_CITIES ->
+                getAllCities(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -234,6 +236,10 @@ public class ClientHandler extends Thread {
 
     private void searchStudyLevel(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchStudyLevels((String) request.getArgument()));
+    }
+
+    private void getAllCities(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getAllCities((Country) request.getArgument()));
     }
 
     @FunctionalInterface

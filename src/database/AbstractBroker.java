@@ -16,8 +16,8 @@ public interface AbstractBroker<T> {
 
     public List<T> getAll();
 
-    public void insert(T paramater) throws Exception;
-
+    public Long insert(T paramater) throws Exception;
+    
     public void update(T paramater) throws Exception;
 
     public void delete(T paramater) throws Exception;

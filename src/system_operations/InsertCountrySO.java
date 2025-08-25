@@ -4,6 +4,7 @@
  */
 package system_operations;
 
+import domain.City;
 import domain.Country;
 
 /**
@@ -25,7 +26,13 @@ public class InsertCountrySO extends AbstractSO {
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.insert((Country) parameter);
+        Country country = (Country) parameter;
+        Long idCountry = genericBroker.insert(country);
+        country.setIdCountry(idCountry);
+        for (City city : country.getCities()) {
+            city.setCountry(country);
+            genericBroker.insert(city);
+        }
     }
 
 }

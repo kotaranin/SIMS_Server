@@ -5,28 +5,30 @@
 package system_operations;
 
 import domain.City;
-import domain.Country;
+import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class DeleteCountrySO extends AbstractSO {
+public class GetAllCitiesSO extends AbstractSO {
+
+    private List<City> cities;
+
+    public List<City> getCities() {
+        return cities;
+    }
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Country))
-            throw new Exception("Sistem ne moze da obrise drzavu.");
+        if (parameter == null || !(parameter instanceof City)) {
+            throw new Exception("Sistem ne moze da vrati sve gradove.");
+        }
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        Country country = (Country) parameter;
-        for (City city : country.getCities()) {
-            city.setCountry(country);
-            genericBroker.delete(city);
-        }
-        genericBroker.delete(country);
+        cities = genericBroker.getAll((City) parameter, condition);
     }
-    
+
 }

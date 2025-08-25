@@ -27,9 +27,17 @@ CREATE TABLE `city` (
   PRIMARY KEY (`id_city`),
   KEY `id_country` (`id_country`),
   CONSTRAINT `city_ibfk_1` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `city` */
+
+insert  into `city`(`id_city`,`name`,`id_country`) values 
+(10,'Niksic',22),
+(11,'Podgorica',22),
+(40,'Beograd',1),
+(41,'Novi Sad',1),
+(42,'Nis',1),
+(43,'Subotica',1);
 
 /*Table structure for table `company` */
 
@@ -55,22 +63,18 @@ CREATE TABLE `country` (
   `id_country` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id_country`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `country` */
 
 insert  into `country`(`id_country`,`name`) values 
 (1,'Srbija'),
 (2,'Madjarska'),
-(3,'Hrvatska'),
 (4,'Bosna i Hercegovina'),
-(5,'Crna Gora'),
-(7,'Severna Makedonija'),
 (8,'Bugarska'),
-(9,'Rumunija'),
 (10,'Danska'),
 (14,'Severna Koreja'),
-(15,'Bugarska');
+(22,'Crna Gora');
 
 /*Table structure for table `exam_period` */
 
@@ -249,9 +253,14 @@ CREATE TABLE `teacher` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   PRIMARY KEY (`id_teacher`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `teacher` */
+
+insert  into `teacher`(`id_teacher`,`first_name`,`last_name`) values 
+(1,'Sinisa','Vlajic'),
+(2,'Vladan','Devedzic'),
+(7,'Sinisa','Jovanovic');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
