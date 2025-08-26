@@ -4,29 +4,30 @@
  */
 package system_operations;
 
-import domain.City;
-import domain.Country;
+import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class DeleteCountrySO extends AbstractSO {
+public class GetAllModulesSO extends AbstractSO {
+
+    private List<domain.Module> modules;
+
+    public List<domain.Module> getModules() {
+        return modules;
+    }
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Country))
-            throw new Exception("Sistem ne moze da obrise drzavu.");
+        if (parameter == null || !(parameter instanceof domain.Module)) {
+            throw new Exception("Sistem ne moze da vrati sve module.");
+        }
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        Country country = (Country) parameter;
-        for (City city : country.getCities()) {
-            city.setCountry(country);
-            genericBroker.delete(city);
-        }
-        genericBroker.delete(country);
+        modules = genericBroker.getAll((domain.Module) parameter, condition);
     }
-    
+
 }

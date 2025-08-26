@@ -6,33 +6,7 @@ package controller;
 
 import domain.*;
 import java.util.List;
-import system_operations.DeleteCountrySO;
-import system_operations.DeleteExamPeriodSO;
-import system_operations.DeleteReportSO;
-import system_operations.DeleteStudyLevelSO;
-import system_operations.DeleteTeacherSO;
-import system_operations.GetAllCitiesSO;
-import system_operations.GetAllCountriesSO;
-import system_operations.GetAllExamPeriodsSO;
-import system_operations.GetAllReportsSO;
-import system_operations.GetAllStudyLevelsSO;
-import system_operations.GetAllTeachersSO;
-import system_operations.InsertCountrySO;
-import system_operations.InsertExamPeriodSO;
-import system_operations.InsertReportSO;
-import system_operations.InsertStudyLevelSO;
-import system_operations.InsertTeacherSO;
-import system_operations.LogInSO;
-import system_operations.SearchCountriesSO;
-import system_operations.SearchExamPeriodsSO;
-import system_operations.SearchReportsSO;
-import system_operations.SearchStudyLevelsSO;
-import system_operations.SearchTeachersSO;
-import system_operations.UpdateCountrySO;
-import system_operations.UpdateExamPeriodSO;
-import system_operations.UpdateReportSO;
-import system_operations.UpdateStudyLevelSO;
-import system_operations.UpdateTeacherSO;
+import system_operations.*;
 
 /**
  *
@@ -89,11 +63,6 @@ public class ServerController {
         GetAllCountriesSO getAllCountriesSO = new GetAllCountriesSO();
         getAllCountriesSO.execute(new Country(), null);
         return getAllCountriesSO.getCountries();
-    }
-
-    public void deleteCountry(Country country) throws Exception {
-        DeleteCountrySO deleteCountrySO = new DeleteCountrySO();
-        deleteCountrySO.execute(country, null);
     }
 
     public void insertCountry(Country country) throws Exception {
@@ -172,11 +141,6 @@ public class ServerController {
         return getAllStudyLevelsSO.getStudyLevels();
     }
 
-    public void deleteStudyLevel(StudyLevel studyLevel) throws Exception {
-        DeleteStudyLevelSO deleteStudyLevelSO = new DeleteStudyLevelSO();
-        deleteStudyLevelSO.execute(studyLevel, null);
-    }
-
     public void insertStudyLevel(StudyLevel studyLevel) throws Exception {
         InsertStudyLevelSO insertStudyLevelSO = new InsertStudyLevelSO();
         insertStudyLevelSO.execute(studyLevel, null);
@@ -197,6 +161,19 @@ public class ServerController {
         GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
         getAllCitiesSO.execute(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
         return getAllCitiesSO.getCities();
+    }
+
+    public List<StudyProgram> getAllStudyPrograms(StudyLevel studyLevel) throws Exception {
+        GetAllStudyProgramsSO getAllStudyProgramsSO = new GetAllStudyProgramsSO();
+        getAllStudyProgramsSO.execute(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
+        return getAllStudyProgramsSO.getStudyPrograms();
+    }
+
+    public List<domain.Module> getAllModules(StudyProgram studyProgram) throws Exception {
+        GetAllModulesSO getAllModulesSO = new GetAllModulesSO();
+        getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
+                + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
+        return getAllModulesSO.getModules();
     }
 
 }

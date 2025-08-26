@@ -24,6 +24,7 @@ public class GenericBroker implements DBOperations<AbstractDO> {
         }
         PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
+        System.out.println(query);
         List<AbstractDO> list = parameter.getList(resultSet);
         resultSet.close();
         preparedStatement.close();

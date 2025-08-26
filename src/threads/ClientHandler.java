@@ -61,8 +61,6 @@ public class ClientHandler extends Thread {
                 searchReports(request, response);
             case GET_ALL_COUNTRIES ->
                 getAllCountries(response);
-            case DELETE_COUNTRY ->
-                deleteCountry(request, response);
             case INSERT_COUNTRY ->
                 insertCountry(request, response);
             case UPDATE_COUNTRY ->
@@ -91,8 +89,6 @@ public class ClientHandler extends Thread {
                 searchTeachers(request, response);
             case GET_ALL_STUDY_LEVELS ->
                 getAllStudyLevels(response);
-            case DELETE_STUDY_LEVEL ->
-                deleteStudyLevel(request, response);
             case INSERT_STUDY_LEVEL ->
                 insertStudyLevel(request, response);
             case UPDATE_STUDY_LEVEL ->
@@ -101,6 +97,10 @@ public class ClientHandler extends Thread {
                 searchStudyLevel(request, response);
             case GET_ALL_CITIES ->
                 getAllCities(request, response);
+            case GET_ALL_STUDY_PROGRAMS ->
+                getAllStudyPrograms(request, response);
+            case GET_ALL_MODULES ->
+                getAllModules(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -162,10 +162,6 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.getAllCountries());
     }
 
-    private void deleteCountry(Request request, Response response) {
-        executeWithoutResult(response, () -> serverController.deleteCountry((Country) request.getArgument()));
-    }
-
     private void insertCountry(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.insertCountry((Country) request.getArgument()));
     }
@@ -222,10 +218,6 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.getAllStudyLevels());
     }
 
-    private void deleteStudyLevel(Request request, Response response) {
-        executeWithoutResult(response, () -> serverController.deleteStudyLevel((StudyLevel) request.getArgument()));
-    }
-
     private void insertStudyLevel(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.insertStudyLevel((StudyLevel) request.getArgument()));
     }
@@ -240,6 +232,14 @@ public class ClientHandler extends Thread {
 
     private void getAllCities(Request request, Response response) {
         executeWithResult(response, () -> serverController.getAllCities((Country) request.getArgument()));
+    }
+
+    private void getAllStudyPrograms(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getAllStudyPrograms((StudyLevel) request.getArgument()));
+    }
+
+    private void getAllModules(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getAllModules((StudyProgram) request.getArgument()));
     }
 
     @FunctionalInterface

@@ -5,6 +5,7 @@
 package system_operations;
 
 import domain.StudyLevel;
+import domain.StudyProgram;
 
 /**
  *
@@ -25,7 +26,19 @@ public class InsertStudyLevelSO extends AbstractSO {
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.insert((StudyLevel) parameter);
+        StudyLevel studyLevel = (StudyLevel) parameter;
+        Long idStudyLevel = genericBroker.insert(studyLevel);
+        studyLevel.setIdStudyLevel(idStudyLevel);
+        for (StudyProgram studyProgram : studyLevel.getStudyPrograms()) {
+            studyProgram.setStudyLevel(studyLevel);
+            Long idStudyProgram = genericBroker.insert(studyProgram);
+            studyProgram.setIdStudyProgram(idStudyProgram);
+            for (domain.Module module : studyProgram.getModules()) {
+                module.setStudyProgram(studyProgram);
+                Long idModule = genericBroker.insert(module);
+                module.setIdModule(idModule);
+            }
+        }
     }
 
 }
