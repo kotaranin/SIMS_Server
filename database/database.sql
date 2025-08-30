@@ -143,9 +143,17 @@ CREATE TABLE `module` (
   PRIMARY KEY (`id_module`),
   KEY `id_study_program` (`id_study_program`),
   CONSTRAINT `module_ibfk_1` FOREIGN KEY (`id_study_program`) REFERENCES `study_program` (`id_study_program`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `module` */
+
+insert  into `module`(`id_module`,`name`,`id_study_program`) values 
+(13,'softversko inzenjerstvo',9),
+(14,'informaciono inzenjerstvo',9),
+(15,'informacioni sistemi',9),
+(16,'informacione tehnologije',9),
+(17,'poslovna analitika',9),
+(18,'tehnologije elektronskog poslovanja',9);
 
 /*Table structure for table `report` */
 
@@ -171,7 +179,7 @@ DROP TABLE IF EXISTS `student`;
 
 CREATE TABLE `student` (
   `id_student` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `index` varchar(9) NOT NULL,
+  `index_number` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `date_of_birth` date NOT NULL,
@@ -186,9 +194,16 @@ CREATE TABLE `student` (
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`),
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`id_study_program`) REFERENCES `study_program` (`id_study_program`),
   CONSTRAINT `student_ibfk_3` FOREIGN KEY (`id_module`) REFERENCES `module` (`id_module`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `student` */
+
+insert  into `student`(`id_student`,`index_number`,`first_name`,`last_name`,`date_of_birth`,`year_of_study`,`id_city`,`id_study_program`,`id_module`) values 
+(1,'2022/0030','Uros','Kotaranin','2004-01-05',3,40,9,13),
+(2,'2022/0268','Natasa','Kanjevac','2003-11-11',3,42,9,15),
+(3,'2022/0392','Jana','Jovanovic','2003-07-25',3,40,9,15),
+(4,'2022/0059','Masa','Savkic','2004-01-05',3,40,9,13),
+(5,'2022/0033','Ana','Radovanovic','2004-01-06',4,40,8,17);
 
 /*Table structure for table `student_officer` */
 
@@ -224,8 +239,7 @@ CREATE TABLE `study_level` (
 /*Data for the table `study_level` */
 
 insert  into `study_level`(`id_study_level`,`name`) values 
-(1,'Osnovne akademske'),
-(2,'Master akademske'),
+(1,'Osnovne akademske test'),
 (3,'Doktorske'),
 (4,'Specijalisticke');
 
@@ -240,9 +254,13 @@ CREATE TABLE `study_program` (
   PRIMARY KEY (`id_study_program`),
   KEY `id_study_level` (`id_study_level`),
   CONSTRAINT `study_program_ibfk_1` FOREIGN KEY (`id_study_level`) REFERENCES `study_level` (`id_study_level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `study_program` */
+
+insert  into `study_program`(`id_study_program`,`name`,`id_study_level`) values 
+(8,'Menadzment i organizacija - na daljinu',1),
+(9,'Informacioni sistemi i tehnologije',1);
 
 /*Table structure for table `teacher` */
 

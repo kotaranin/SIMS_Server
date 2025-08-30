@@ -4,30 +4,30 @@
  */
 package system_operations;
 
-import domain.City;
 import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class GetAllCitiesSO extends AbstractSO {
+public class GetModulesSO extends AbstractSO {
 
-    private List<City> cities;
+    private List<domain.Module> modules;
 
-    public List<City> getCities() {
-        return cities;
+    public List<domain.Module> getModules() {
+        return modules;
     }
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof City)) {
-            throw new Exception("Sistem ne moze da vrati sve gradove.");
+        if (parameter == null || !(parameter instanceof domain.Module)) {
+            throw new Exception("Sistem ne moze da vrati sve module.");
         }
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        cities = genericBroker.getAll((City) parameter, " JOIN country ON city.id_country = country.id_country");
+        modules = genericBroker.getAll((domain.Module) parameter, condition);
     }
+
 }

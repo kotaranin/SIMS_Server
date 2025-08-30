@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author kotar
  */
-public class GetAllStudyProgramsSO extends AbstractSO {
+public class GetStudyProgramsSO extends AbstractSO {
 
     private List<StudyProgram> studyPrograms;
 
@@ -21,19 +21,19 @@ public class GetAllStudyProgramsSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof StudyProgram)) {
+        if (parameter == null || !(parameter instanceof StudyProgram))
             throw new Exception("Sistem ne moze da vrati sve nivoe studija.");
-        }
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        studyPrograms = genericBroker.getAll((StudyProgram) parameter, " JOIN study_level ON study_program.id_study_level = study_level.id_study_level ");
+        studyPrograms = genericBroker.getAll((StudyProgram) parameter, condition);
         GetModulesSO getAllModulesSO = new GetModulesSO();
         for (StudyProgram studyProgram : studyPrograms) {
             getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
-                    + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
+                + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
             studyProgram.setModules(getAllModulesSO.getModules());
         }
     }
+
 }

@@ -28,10 +28,10 @@ public class UpdateStudyLevelSO extends AbstractSO {
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
         StudyLevel studyLevel = (StudyLevel) parameter;
-        GetAllStudyProgramsSO getAllStudyProgramsSO = new GetAllStudyProgramsSO();
+        GetStudyProgramsSO getAllStudyProgramsSO = new GetStudyProgramsSO();
         getAllStudyProgramsSO.execute(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
         List<StudyProgram> oldStudyPrograms = getAllStudyProgramsSO.getStudyPrograms();
-        GetAllModulesSO getAllModulesSO = new GetAllModulesSO();
+        GetModulesSO getAllModulesSO = new GetModulesSO();
         genericBroker.update(studyLevel);
         for (StudyProgram oldStudyProgram : oldStudyPrograms) {
             getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"

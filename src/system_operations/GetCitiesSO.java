@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author kotar
  */
-public class GetAllCitiesSO extends AbstractSO {
+public class GetCitiesSO extends AbstractSO {
 
     private List<City> cities;
 
@@ -28,6 +28,7 @@ public class GetAllCitiesSO extends AbstractSO {
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        cities = genericBroker.getAll((City) parameter, " JOIN country ON city.id_country = country.id_country");
+        cities = genericBroker.getAll((City) parameter, condition);
     }
+
 }

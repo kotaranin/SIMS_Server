@@ -95,12 +95,26 @@ public class ClientHandler extends Thread {
                 updateStudyLevel(request, response);
             case SEARCH_STUDY_LEVEL ->
                 searchStudyLevel(request, response);
+            case GET_CITIES ->
+                getCities(request, response);
+            case GET_STUDY_PROGRAMS ->
+                getStudyPrograms(request, response);
+            case GET_MODULES ->
+                getModules(request, response);
+            case GET_ALL_STUDENTS ->
+                getAllStudents(response);
             case GET_ALL_CITIES ->
-                getAllCities(request, response);
+                getAllCities(response);
             case GET_ALL_STUDY_PROGRAMS ->
-                getAllStudyPrograms(request, response);
+                getAllStudyPrograms(response);
             case GET_ALL_MODULES ->
-                getAllModules(request, response);
+                getAllModules(response);
+            case SEARCH_STUDENTS ->
+                searchStudents(request, response);
+            case INSERT_STUDENT ->
+                insertStudent(request, response);
+            case UPDATE_STUDENT ->
+                updateStudent(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -230,16 +244,44 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.searchStudyLevels((String) request.getArgument()));
     }
 
-    private void getAllCities(Request request, Response response) {
-        executeWithResult(response, () -> serverController.getAllCities((Country) request.getArgument()));
+    private void getCities(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getCities((Country) request.getArgument()));
     }
 
-    private void getAllStudyPrograms(Request request, Response response) {
-        executeWithResult(response, () -> serverController.getAllStudyPrograms((StudyLevel) request.getArgument()));
+    private void getStudyPrograms(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getStudyPrograms((StudyLevel) request.getArgument()));
     }
 
-    private void getAllModules(Request request, Response response) {
-        executeWithResult(response, () -> serverController.getAllModules((StudyProgram) request.getArgument()));
+    private void getModules(Request request, Response response) {
+        executeWithResult(response, () -> serverController.getModules((StudyProgram) request.getArgument()));
+    }
+
+    private void getAllStudents(Response response) {
+        executeWithResult(response, () -> serverController.getAllStudents());
+    }
+
+    private void getAllCities(Response response) {
+        executeWithResult(response, () -> serverController.getAllCities());
+    }
+
+    private void getAllStudyPrograms(Response response) {
+        executeWithResult(response, () -> serverController.getAllStudyPrograms());
+    }
+
+    private void getAllModules(Response response) {
+        executeWithResult(response, () -> serverController.getAllModules());
+    }
+
+    private void searchStudents(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchStudents((Student) request.getArgument()));
+    }
+
+    private void insertStudent(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertStudent((Student) request.getArgument()));
+    }
+
+    private void updateStudent(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateStudent((Student) request.getArgument()));
     }
 
     @FunctionalInterface

@@ -4,30 +4,23 @@
  */
 package system_operations;
 
-import domain.City;
-import java.util.List;
+import domain.Student;
 
 /**
  *
  * @author kotar
  */
-public class GetAllCitiesSO extends AbstractSO {
-
-    private List<City> cities;
-
-    public List<City> getCities() {
-        return cities;
-    }
+public class UpdateStudentSO extends AbstractSO{
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof City)) {
-            throw new Exception("Sistem ne moze da vrati sve gradove.");
-        }
+        if (parameter == null || !(parameter instanceof Student))
+            throw new Exception("Sistem ne moze da zapamti studenta.");
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        cities = genericBroker.getAll((City) parameter, " JOIN country ON city.id_country = country.id_country");
+        genericBroker.update((Student) parameter);
     }
+    
 }

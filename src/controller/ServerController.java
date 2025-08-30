@@ -157,23 +157,88 @@ public class ServerController {
         return searchStudyLevelsSO.getStudyLevels();
     }
 
-    public List<City> getAllCities(Country country) throws Exception {
-        GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
+    public List<City> getCities(Country country) throws Exception {
+        GetCitiesSO getAllCitiesSO = new GetCitiesSO();
         getAllCitiesSO.execute(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
         return getAllCitiesSO.getCities();
     }
 
-    public List<StudyProgram> getAllStudyPrograms(StudyLevel studyLevel) throws Exception {
-        GetAllStudyProgramsSO getAllStudyProgramsSO = new GetAllStudyProgramsSO();
+    public List<StudyProgram> getStudyPrograms(StudyLevel studyLevel) throws Exception {
+        GetStudyProgramsSO getAllStudyProgramsSO = new GetStudyProgramsSO();
         getAllStudyProgramsSO.execute(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
         return getAllStudyProgramsSO.getStudyPrograms();
     }
 
-    public List<domain.Module> getAllModules(StudyProgram studyProgram) throws Exception {
-        GetAllModulesSO getAllModulesSO = new GetAllModulesSO();
+    public List<domain.Module> getModules(StudyProgram studyProgram) throws Exception {
+        GetModulesSO getAllModulesSO = new GetModulesSO();
         getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
                 + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
         return getAllModulesSO.getModules();
+    }
+
+    public List<Student> getAllStudents() throws Exception {
+        GetAllStudentsSO getAllStudentsSO = new GetAllStudentsSO();
+        getAllStudentsSO.execute(new Student(), null);
+        return getAllStudentsSO.getStudents();
+    }
+
+    public List<City> getAllCities() throws Exception {
+        GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
+        getAllCitiesSO.execute(new City(), null);
+        return getAllCitiesSO.getCities();
+    }
+
+    public List<StudyProgram> getAllStudyPrograms() throws Exception {
+        GetAllStudyProgramsSO getAllStudyProgramsSO = new GetAllStudyProgramsSO();
+        getAllStudyProgramsSO.execute(new StudyProgram(), null);
+        return getAllStudyProgramsSO.getStudyPrograms();
+    }
+
+    public List<domain.Module> getAllModules() throws Exception {
+        GetAllModulesSO getAllModulesSO = new GetAllModulesSO();
+        getAllModulesSO.execute(new domain.Module(), null);
+        return getAllModulesSO.getModules();
+    }
+
+    public List<Student> searchStudents(Student student) throws Exception {
+        StringBuilder condition = new StringBuilder(" WHERE 1=1 ");
+        if (student.getIndexNumber() != null && !student.getIndexNumber().isEmpty()) {
+            condition.append(" AND student.index_number LIKE '%").append(student.getIndexNumber()).append("%' ");
+        }
+        if (student.getFirstName() != null && !student.getFirstName().isEmpty()) {
+            condition.append(" AND LOWER(student.first_name) LIKE '%").append(student.getFirstName().toLowerCase()).append("%' ");
+        }
+        if (student.getLastName() != null && !student.getLastName().isEmpty()) {
+            condition.append(" AND LOWER(student.last_name) LIKE '%").append(student.getLastName().toLowerCase()).append("%' ");
+        }
+        if (student.getDateOfBirth() != null) {
+            condition.append(" AND student.date_of_birth = '").append(student.getDateOfBirth()).append("' ");
+        }
+        if (student.getYearOfStudy() != null) {
+            condition.append(" AND student.year_of_study = ").append(student.getYearOfStudy());
+        }
+        if (student.getCity() != null) {
+            condition.append(" AND student.id_city = ").append(student.getCity().getIdCity());
+        }
+        if (student.getStudyProgram() != null) {
+            condition.append(" AND student.id_study_program = ").append(student.getStudyProgram().getIdStudyProgram());
+        }
+        if (student.getModule() != null) {
+            condition.append(" AND student.id_module = ").append(student.getModule().getIdModule());
+        }
+        SearchStudentsSO searchStudentsSO = new SearchStudentsSO();
+        searchStudentsSO.execute(new Student(), condition.toString());
+        return searchStudentsSO.getStudents();
+    }
+
+    public void insertStudent(Student student) throws Exception {
+        InsertStudentSO insertStudentSO = new InsertStudentSO();
+        insertStudentSO.execute(student, null);
+    }
+
+    public void updateStudent(Student student) throws Exception {
+        UpdateStudentSO updateStudentSO = new UpdateStudentSO();
+        updateStudentSO.execute(student, null);
     }
 
 }
