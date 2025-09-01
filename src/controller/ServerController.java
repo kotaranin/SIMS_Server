@@ -241,4 +241,31 @@ public class ServerController {
         updateStudentSO.execute(student, null);
     }
 
+    public List<Company> getAllCompanies() throws Exception {
+        GetAllCompaniesSO getAllCompaniesSO = new GetAllCompaniesSO();
+        getAllCompaniesSO.execute(new Company(), null);
+        return getAllCompaniesSO.getCompanies();
+    }
+
+    public List<Internship> getAllInternships() throws Exception {
+        GetAllInternshipsSO getAllInternshipsSO = new GetAllInternshipsSO();
+        getAllInternshipsSO.execute(new Internship(), null);
+        return getAllInternshipsSO.getInternships();
+    }
+
+    public void deleteInternship(Internship internship) throws Exception {
+        DeleteInternshipSO deleteInternshipSO = new DeleteInternshipSO();
+        deleteInternshipSO.execute(internship, null);
+    }
+
+    public void insertInternship(Internship internship) throws Exception {
+        InsertInternshipSO insertInternshipSO = new InsertInternshipSO();
+        insertInternshipSO.execute(internship, null);
+    }
+
+    public void updateInternship(Internship internship) throws Exception {
+        UpdateInternshipSO updateInternshipSO = new UpdateInternshipSO();
+        updateInternshipSO.execute(internship, null);
+    }
+
 }

@@ -115,6 +115,16 @@ public class ClientHandler extends Thread {
                 insertStudent(request, response);
             case UPDATE_STUDENT ->
                 updateStudent(request, response);
+            case GET_ALL_COMPANIES ->
+                getAllCompanies(response);
+            case GET_ALL_INTERNSHIPS ->
+                getAllInternships(response);
+            case DELETE_INTERNSHIP ->
+                deleteInternship(request, response);
+            case INSERT_INTERNSHIP ->
+                insertInternship(request, response);
+            case UPDATE_INTERNSHIP ->
+                updateInternship(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -282,6 +292,26 @@ public class ClientHandler extends Thread {
 
     private void updateStudent(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateStudent((Student) request.getArgument()));
+    }
+
+    private void getAllCompanies(Response response) {
+        executeWithResult(response, () -> serverController.getAllCompanies());
+    }
+
+    private void getAllInternships(Response response) {
+        executeWithResult(response, () -> serverController.getAllInternships());
+    }
+
+    private void deleteInternship(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.deleteInternship((Internship) request.getArgument()));
+    }
+
+    private void insertInternship(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertInternship((Internship) request.getArgument()));
+    }
+
+    private void updateInternship(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateInternship((Internship) request.getArgument()));
     }
 
     @FunctionalInterface
