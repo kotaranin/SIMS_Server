@@ -125,6 +125,16 @@ public class ClientHandler extends Thread {
                 insertInternship(request, response);
             case UPDATE_INTERNSHIP ->
                 updateInternship(request, response);
+            case GET_ALL_REGISTRATION_REQUESTS ->
+                getAllRegistrationRequests(response);
+            case INSERT_REGISTRATION_REQUEST ->
+                insertRegistrationRequest(request, response);
+            case DELETE_REGISTRATION_REQUEST ->
+                deleteRegistrationRequest(request, response);
+            case GET_ALL_STUDENT_OFFICERS ->
+                getAllStudentOfficers(response);
+            case INSERT_STUDENT_OFFICER ->
+                insertStudentOfficer(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -312,6 +322,26 @@ public class ClientHandler extends Thread {
 
     private void updateInternship(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateInternship((Internship) request.getArgument()));
+    }
+
+    private void insertRegistrationRequest(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertRegistrationRequest((RegistrationRequest) request.getArgument()));
+    }
+
+    private void deleteRegistrationRequest(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.deleteRegistrationRequest((RegistrationRequest) request.getArgument()));
+    }
+
+    private void insertStudentOfficer(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertStudentOfficer((StudentOfficer) request.getArgument()));
+    }
+
+    private void getAllRegistrationRequests(Response response) {
+        executeWithResult(response, () -> serverController.getAllRegistrationRequests());
+    }
+
+    private void getAllStudentOfficers(Response response) {
+        executeWithResult(response, () -> serverController.getAllStudentOfficers());
     }
 
     @FunctionalInterface
