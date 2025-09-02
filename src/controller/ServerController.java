@@ -295,4 +295,14 @@ public class ServerController {
         return getAllStudentOfficersSO.getStudentOfficers();
     }
 
+    public void insertCompany(Company company) throws Exception {
+        InsertCompanySO insertCompanySO = new InsertCompanySO();
+        insertCompanySO.execute(company, null);
+    }
+
+    public void updateCompany(Company company) throws Exception {
+        UpdateCompanySO updateCompanySO = new UpdateCompanySO();
+        updateCompanySO.execute(company, null);
+    }
+
 }

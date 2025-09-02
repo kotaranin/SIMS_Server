@@ -135,6 +135,10 @@ public class ClientHandler extends Thread {
                 getAllStudentOfficers(response);
             case INSERT_STUDENT_OFFICER ->
                 insertStudentOfficer(request, response);
+            case INSERT_COMPANY ->
+                insertCompany(request, response);
+            case UPDATE_COMPANY ->
+                updateCompany(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -342,6 +346,14 @@ public class ClientHandler extends Thread {
 
     private void getAllStudentOfficers(Response response) {
         executeWithResult(response, () -> serverController.getAllStudentOfficers());
+    }
+
+    private void insertCompany(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.insertCompany((Company) request.getArgument()));
+    }
+
+    private void updateCompany(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateCompany((Company) request.getArgument()));
     }
 
     @FunctionalInterface
