@@ -135,6 +135,8 @@ public class ClientHandler extends Thread {
                 getAllStudentOfficers(response);
             case INSERT_STUDENT_OFFICER ->
                 insertStudentOfficer(request, response);
+            case UPDATE_STUDENT_OFFICER ->
+                updateStudentOfficer(request, response);
             case INSERT_COMPANY ->
                 insertCompany(request, response);
             case UPDATE_COMPANY ->
@@ -354,6 +356,10 @@ public class ClientHandler extends Thread {
 
     private void updateCompany(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateCompany((Company) request.getArgument()));
+    }
+
+    private void updateStudentOfficer(Request request, Response response) {
+        executeWithoutResult(response, () -> serverController.updateStudentOfficer((StudentOfficer) request.getArgument()));
     }
 
     @FunctionalInterface

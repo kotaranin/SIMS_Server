@@ -305,4 +305,9 @@ public class ServerController {
         updateCompanySO.execute(company, null);
     }
 
+    public void updateStudentOfficer(StudentOfficer studentOfficer) throws Exception {
+        UpdateStudentOfficerSO updateStudentOfficerSO = new UpdateStudentOfficerSO();
+        updateStudentOfficerSO.execute(studentOfficer, null);
+    }
+
 }
