@@ -51,7 +51,7 @@ CREATE TABLE `company` (
   PRIMARY KEY (`id_company`),
   KEY `id_city` (`id_city`),
   CONSTRAINT `company_ibfk_1` FOREIGN KEY (`id_city`) REFERENCES `city` (`id_city`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `company` */
 
@@ -59,7 +59,8 @@ insert  into `company`(`id_company`,`name`,`address`,`id_city`) values
 (1,'CodeIT','Adresa 1',40),
 (2,'Bosch','Adresa 2',40),
 (3,'Ananas','Adresa 3',40),
-(4,'Banka Inteza','Adresa 4',41);
+(4,'Banka Inteza','Adresa 5',11),
+(5,'Delta Real Estate','Adresa 6',40);
 
 /*Table structure for table `country` */
 
@@ -174,13 +175,17 @@ CREATE TABLE `registration_request` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password_salt` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hashed_password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `question` varchar(100) NOT NULL,
+  `answer_salt` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hashed_answer` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `admin` tinyint(1) NOT NULL,
   `id_study_level` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id_registration_request`),
   KEY `id_study_level` (`id_study_level`),
   CONSTRAINT `registration_request_ibfk_1` FOREIGN KEY (`id_study_level`) REFERENCES `study_level` (`id_study_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `registration_request` */
 
@@ -244,24 +249,23 @@ CREATE TABLE `student_officer` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password_salt` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hashed_password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `question` varchar(100) NOT NULL,
+  `answer_salt` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hashed_answer` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `admin` tinyint(1) NOT NULL,
   `id_study_level` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id_student_officer`),
   KEY `id_study_level` (`id_study_level`),
   CONSTRAINT `student_officer_ibfk_1` FOREIGN KEY (`id_study_level`) REFERENCES `study_level` (`id_study_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `student_officer` */
 
-insert  into `student_officer`(`id_student_officer`,`first_name`,`last_name`,`email`,`password`,`admin`,`id_study_level`) values 
-(1,'Uros','Kotaranin','uros.kotaranin@fon.bg.ac.rs','12345678',1,1),
-(2,'Pera','Peric','pera.peric@fon.bg.ac.rs','123456',0,3),
-(3,'Mara','Maric','mara.maric@fon.bg.ac.rs','123456',1,3),
-(4,'Mina','Minic','mina.minic@fon.bg.ac.rs','123456',0,1),
-(5,'Lara','Laric','lara.laric@fon.bg.ac.rs','123456789',0,1),
-(6,'marko','markic','marko.markic.fon.bg.ac.rs','123',1,1),
-(7,'Ana','Anic','ana.anic@fon.bg.ac.rs','123456',1,4);
+insert  into `student_officer`(`id_student_officer`,`first_name`,`last_name`,`email`,`password_salt`,`hashed_password`,`question`,`answer_salt`,`hashed_answer`,`admin`,`id_study_level`) values 
+(1,'Uros','Kotaranin','uros.kotaranin@fon.bg.ac.rs','Ff15rvR/onBtlxKYF9e65A==','E3drVnB63PktBOpQkUniqv0FMT1FGqF7Mlfe16gyam4=','Najgori predmet','/UZs8pC928qspAJaUiglFw==','nKOCbvudtkACHvNUatyCE1cFRj4TA4nYyqe/A2+cJzo=',1,1),
+(9,'Pera','Peric','pera.peric','kv3LBHom49kDHNriOuF0WQ==','6lw6p1JCJq0bH4AMljsArwbkrhVW5TwQgplC3hk8oxc=','Najgori predmet','M3GZYZ8tXZszrAmNNVYfpA==','P4qQKJ/k3aDlrofYZXVb+Fe4Bu6m0Yj60pc0Z47Oyaw=',0,3);
 
 /*Table structure for table `study_level` */
 

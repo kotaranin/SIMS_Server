@@ -5,6 +5,7 @@
 package system_operations;
 
 import domain.StudentOfficer;
+import util.PasswordUtil;
 
 /**
  *
@@ -21,7 +22,12 @@ public class UpdateStudentOfficerSO extends AbstractSO{
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.update((StudentOfficer) parameter);
+        StudentOfficer studentOfficer = (StudentOfficer) parameter;
+        String passwordSalt = PasswordUtil.generateSalt();
+        String hashedPassword = PasswordUtil.hash(studentOfficer.getHashedPassword(), passwordSalt);
+        studentOfficer.setPasswordSalt(passwordSalt);
+        studentOfficer.setHashedPassword(hashedPassword);
+        genericBroker.update(studentOfficer);
     }
     
 }

@@ -26,8 +26,8 @@ public class ServerController {
         return instance;
     }
 
-    public StudentOfficer logIn(StudentOfficer studentOfficer) throws Exception {
-        LogInSO logInSO = new LogInSO();
+    public StudentOfficer passwordLogIn(StudentOfficer studentOfficer) throws Exception {
+        PasswordLogInSO logInSO = new PasswordLogInSO();
         logInSO.execute(studentOfficer, null);
         return logInSO.getStudentOfficer();
     }
@@ -308,6 +308,12 @@ public class ServerController {
     public void updateStudentOfficer(StudentOfficer studentOfficer) throws Exception {
         UpdateStudentOfficerSO updateStudentOfficerSO = new UpdateStudentOfficerSO();
         updateStudentOfficerSO.execute(studentOfficer, null);
+    }
+
+    public StudentOfficer questionLogIn(StudentOfficer studentOfficer) throws Exception {
+        QuestionLogInSO questionLogInSO = new QuestionLogInSO();
+        questionLogInSO.execute(studentOfficer, null);
+        return questionLogInSO.getStudentOfficer();
     }
 
 }

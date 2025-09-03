@@ -5,6 +5,7 @@
 package system_operations;
 
 import domain.RegistrationRequest;
+import util.PasswordUtil;
 
 /**
  *
@@ -20,7 +21,16 @@ public class InsertRegistrationRequestSO extends AbstractSO{
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.insert((RegistrationRequest) parameter);
+        RegistrationRequest registrationRequest = (RegistrationRequest) parameter;
+        String passwordSalt = PasswordUtil.generateSalt();
+        String hashedPassword = PasswordUtil.hash(registrationRequest.getHashedPassword(), passwordSalt);
+        String answerSalt = PasswordUtil.generateSalt();
+        String hashedAnswer = PasswordUtil.hash(registrationRequest.getHashedAnswer(), answerSalt);
+        registrationRequest.setPasswordSalt(passwordSalt);
+        registrationRequest.setHashedPassword(hashedPassword);
+        registrationRequest.setAnswerSalt(answerSalt);
+        registrationRequest.setHashedAnswer(hashedAnswer);
+        genericBroker.insert(registrationRequest);
     }
     
 }

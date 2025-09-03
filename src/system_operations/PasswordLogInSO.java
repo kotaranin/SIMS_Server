@@ -7,12 +7,13 @@ package system_operations;
 import domain.StudentOfficer;
 import java.util.List;
 import java.sql.SQLException;
+import util.PasswordUtil;
 
 /**
  *
  * @author kotar
  */
-public class LogInSO extends AbstractSO {
+public class PasswordLogInSO extends AbstractSO {
 
     private StudentOfficer studentOfficer;
 
@@ -22,20 +23,25 @@ public class LogInSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws SQLException, Exception {
-        if (parameter == null || !(parameter instanceof StudentOfficer))
+        if (parameter == null || !(parameter instanceof StudentOfficer)) {
             throw new Exception("Sistem ne moze da uloguje korisnika.");
+        }
     }
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
         List<StudentOfficer> studentOfficers = genericBroker.getAll((StudentOfficer) parameter, " JOIN study_level ON student_officer.id_study_level = study_level.id_study_level");
         for (StudentOfficer s : studentOfficers) {
-            if (s.equals((StudentOfficer) parameter)) {
-                studentOfficer = s;
-                return;
+            if (s.getEmail().equals(((StudentOfficer) parameter).getEmail())) {
+                String plainPassword = ((StudentOfficer) parameter).getHashedPassword();
+                String hashedInput = PasswordUtil.hash(plainPassword, s.getPasswordSalt());
+                if (s.getHashedPassword().equals(hashedInput)) {
+                    studentOfficer = s;
+                    return;
+                }
             }
         }
-        throw new Exception("Imejl ili lozinka nisu isrpavni.");
+        throw new Exception("Imejl ili lozinka nisu ispravni.");
     }
 
 }

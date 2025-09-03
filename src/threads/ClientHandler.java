@@ -47,8 +47,8 @@ public class ClientHandler extends Thread {
     private void handleRequest(Request request) throws IOException {
         Response response = new Response();
         switch (request.getOperation()) {
-            case LOG_IN ->
-                logIn(request, response);
+            case PASSWORD_LOG_IN ->
+                passwordLogIn(request, response);
             case GET_ALL_REPORTS ->
                 getAllReports(response);
             case DELETE_REPORT ->
@@ -141,6 +141,8 @@ public class ClientHandler extends Thread {
                 insertCompany(request, response);
             case UPDATE_COMPANY ->
                 updateCompany(request, response);
+            case QUESTION_LOG_IN ->
+                questionLogIn(request, response);
             default ->
                 throw new AssertionError();
         }
@@ -174,8 +176,8 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void logIn(Request request, Response response) {
-        executeWithResult(response, () -> serverController.logIn((StudentOfficer) request.getArgument()));
+    private void passwordLogIn(Request request, Response response) {
+        executeWithResult(response, () -> serverController.passwordLogIn((StudentOfficer) request.getArgument()));
     }
 
     private void getAllReports(Response response) {
@@ -360,6 +362,10 @@ public class ClientHandler extends Thread {
 
     private void updateStudentOfficer(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateStudentOfficer((StudentOfficer) request.getArgument()));
+    }
+
+    private void questionLogIn(Request request, Response response) {
+        executeWithResult(response, () -> serverController.questionLogIn((StudentOfficer) request.getArgument()));
     }
 
     @FunctionalInterface

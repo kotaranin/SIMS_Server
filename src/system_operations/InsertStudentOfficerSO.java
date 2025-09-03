@@ -5,6 +5,7 @@
 package system_operations;
 
 import domain.StudentOfficer;
+import util.PasswordUtil;
 
 /**
  *
@@ -20,7 +21,8 @@ public class InsertStudentOfficerSO extends AbstractSO{
 
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
-        genericBroker.insert((StudentOfficer) parameter);
+        StudentOfficer studentOfficer = (StudentOfficer) parameter;
+        genericBroker.insert(studentOfficer);
     }
     
 }
