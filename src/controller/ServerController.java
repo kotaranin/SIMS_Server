@@ -316,4 +316,22 @@ public class ServerController {
         return questionLogInSO.getStudentOfficer();
     }
 
+    public List<Company> searchCompanies(Company company) throws Exception {
+        SearchCompaniesSO searchCompaniesSO = new SearchCompaniesSO();
+        searchCompaniesSO.execute(company, null);
+        return searchCompaniesSO.getCompanies();
+    }
+
+    public List<Internship> searchInternships(Internship internship) throws Exception {
+        SearchInternshipsSO searchInternshipsSO = new SearchInternshipsSO();
+        searchInternshipsSO.execute(internship, null);
+        return searchInternshipsSO.getInternships();
+    }
+
+    public List<RegistrationRequest> searchRegistrationRequests(RegistrationRequest registrationRequest) throws Exception {
+        SearchRegistrationRequestsSO searchRegistrationRequestsSO = new SearchRegistrationRequestsSO();
+        searchRegistrationRequestsSO.execute(registrationRequest, null);
+        return searchRegistrationRequestsSO.getRegistrationRequests();
+    }
+
 }

@@ -28,32 +28,30 @@ public class UpdateStudyLevelSO extends AbstractSO {
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
         StudyLevel studyLevel = (StudyLevel) parameter;
-        GetStudyProgramsSO getAllStudyProgramsSO = new GetStudyProgramsSO();
-        getAllStudyProgramsSO.execute(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
-        List<StudyProgram> oldStudyPrograms = getAllStudyProgramsSO.getStudyPrograms();
-        GetModulesSO getAllModulesSO = new GetModulesSO();
+        for (StudyProgram studyProgram : studyLevel.getStudyPrograms()) {
+            studyProgram.setStudyLevel(studyLevel);
+            if (studyProgram.getIdStudyProgram() == null) {
+                Long idStudyProgram = genericBroker.insert(studyProgram);
+                studyProgram.setIdStudyProgram(idStudyProgram);
+                for (domain.Module module : studyProgram.getModules()) {
+                    module.setStudyProgram(studyProgram);
+                    Long idModule = genericBroker.insert(module);
+                    module.setIdModule(idModule);
+                }
+            } else {
+                for (domain.Module module : studyProgram.getModules()) {
+                    module.setStudyProgram(studyProgram);
+                    if (module.getIdModule() == null) {
+                        Long idModule = genericBroker.insert(module);
+                        module.setIdModule(idModule);
+                    } else {
+                        genericBroker.update(module);
+                    }
+                }
+            }
+            genericBroker.update(studyProgram);
+        }
         genericBroker.update(studyLevel);
-        for (StudyProgram oldStudyProgram : oldStudyPrograms) {
-            getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
-                    + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + oldStudyProgram.getIdStudyProgram());
-            List<domain.Module> oldModules = getAllModulesSO.getModules();
-            for (domain.Module oldModule : oldModules) {
-                genericBroker.delete(oldModule);
-            }
-            genericBroker.delete(oldStudyProgram);
-        }
-        List<StudyProgram> newStudyPrograms = studyLevel.getStudyPrograms();
-        for (StudyProgram newStudyProgram : newStudyPrograms) {
-            List<domain.Module> newModules = newStudyProgram.getModules();
-            newStudyProgram.setStudyLevel(studyLevel);
-            Long idStudyProgram = genericBroker.insert(newStudyProgram);
-            newStudyProgram.setIdStudyProgram(idStudyProgram);
-            for (domain.Module newModule : newModules) {
-                newModule.setStudyProgram(newStudyProgram);
-                Long idModule = genericBroker.insert(newModule);
-                newModule.setIdModule(idModule);
-            }
-        }
     }
 
 }

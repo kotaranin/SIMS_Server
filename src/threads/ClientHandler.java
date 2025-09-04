@@ -117,6 +117,8 @@ public class ClientHandler extends Thread {
                 updateStudent(request, response);
             case GET_ALL_COMPANIES ->
                 getAllCompanies(response);
+            case SEARCH_INTERNSHIPS ->
+                searchInternships(request, response);
             case GET_ALL_INTERNSHIPS ->
                 getAllInternships(response);
             case DELETE_INTERNSHIP ->
@@ -127,6 +129,8 @@ public class ClientHandler extends Thread {
                 updateInternship(request, response);
             case GET_ALL_REGISTRATION_REQUESTS ->
                 getAllRegistrationRequests(response);
+            case SEARCH_REGISTRATION_REQUESTS ->
+                searchReagistrationRequests(request, response);
             case INSERT_REGISTRATION_REQUEST ->
                 insertRegistrationRequest(request, response);
             case DELETE_REGISTRATION_REQUEST ->
@@ -137,6 +141,8 @@ public class ClientHandler extends Thread {
                 insertStudentOfficer(request, response);
             case UPDATE_STUDENT_OFFICER ->
                 updateStudentOfficer(request, response);
+            case SEARCH_COMPANIES ->
+                searchCompanies(request, response);
             case INSERT_COMPANY ->
                 insertCompany(request, response);
             case UPDATE_COMPANY ->
@@ -366,6 +372,18 @@ public class ClientHandler extends Thread {
 
     private void questionLogIn(Request request, Response response) {
         executeWithResult(response, () -> serverController.questionLogIn((StudentOfficer) request.getArgument()));
+    }
+
+    private void searchCompanies(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchCompanies((Company) request.getArgument()));
+    }
+
+    private void searchInternships(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchInternships((Internship) request.getArgument()));
+    }
+
+    private void searchReagistrationRequests(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchRegistrationRequests((RegistrationRequest) request.getArgument()));
     }
 
     @FunctionalInterface
