@@ -28,18 +28,16 @@ public class UpdateCountrySO extends AbstractSO {
     @Override
     protected void executeOperation(Object parameter, String condition) throws Exception {
         Country country = (Country) parameter;
-        GetCitiesSO getAllCitiesSO = new GetCitiesSO();
-        getAllCitiesSO.executeOperation(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
-        List<City> oldCities = getAllCitiesSO.getCities();
+        for (City city : country.getCities()) {
+            city.setCountry(country);
+            if (city.getIdCity() == null) {
+                long idCity = genericBroker.insert(city);
+                city.setIdCity(idCity);
+            } else {
+                genericBroker.update(city);
+            }
+        }
         genericBroker.update(country);
-        for (City oldCity : oldCities) {
-            genericBroker.delete(oldCity);
-        }
-        List<City> newCities = country.getCities();
-        for (City newCity : newCities) {
-            newCity.setCountry(country);
-            genericBroker.insert(newCity);
-        }
     }
 
 }

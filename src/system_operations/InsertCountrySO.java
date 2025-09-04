@@ -31,7 +31,8 @@ public class InsertCountrySO extends AbstractSO {
         country.setIdCountry(idCountry);
         for (City city : country.getCities()) {
             city.setCountry(country);
-            genericBroker.insert(city);
+            long idCity = genericBroker.insert(city);
+            city.setIdCity(idCity);
         }
     }
 
