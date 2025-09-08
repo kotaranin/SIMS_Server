@@ -16,17 +16,19 @@ public class UpdateStudyLevelSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof StudyLevel)) {
-            throw new Exception("Sistem ne moze da zapamti nivo studija.");
-        }
         StudyLevel studyLevel = (StudyLevel) parameter;
-        if (studyLevel.getName() == null) {
-            throw new Exception("Sistem ne moze da zapamti nivo studija.");
+        GetAllStudyLevelsSO getAllStudyLevelsSO = new GetAllStudyLevelsSO();
+        getAllStudyLevelsSO.execute(new StudyLevel());
+        List<StudyLevel> studyLevels = getAllStudyLevelsSO.getStudyLevels();
+        for (StudyLevel sl : studyLevels) {
+            if (!sl.getIdStudyLevel().equals(studyLevel.getIdStudyLevel()) && sl.getName().equalsIgnoreCase(studyLevel.getName())) {
+                throw new Exception("Nije moguće uneti dva nivoa studija pod istim imenom.");
+            }
         }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         StudyLevel studyLevel = (StudyLevel) parameter;
         for (StudyProgram studyProgram : studyLevel.getStudyPrograms()) {
             studyProgram.setStudyLevel(studyLevel);

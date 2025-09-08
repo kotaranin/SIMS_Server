@@ -27,7 +27,7 @@ public class GetAllReportsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         reports = genericBroker.getAll((Report) parameter, null);
     }
 

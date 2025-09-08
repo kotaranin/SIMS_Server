@@ -26,7 +26,7 @@ public class GetAllTeachersSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         teachers = genericBroker.getAll((Teacher) parameter, null);
     }
 

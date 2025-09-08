@@ -28,12 +28,12 @@ public class GetAllStudyLevelsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         studyLevels = genericBroker.getAll((StudyLevel) parameter, null);
-        GetStudyProgramsSO getAllStudyProgramsSO = new GetStudyProgramsSO();
+        GetStudyProgramsSO getStudyProgramsSO = new GetStudyProgramsSO();
         for (StudyLevel studyLevel : studyLevels) {
-            getAllStudyProgramsSO.execute(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
-            studyLevel.setStudyPrograms(getAllStudyProgramsSO.getStudyPrograms());
+            getStudyProgramsSO.execute(studyLevel);
+            studyLevel.setStudyPrograms(getStudyProgramsSO.getStudyPrograms());
         }
     }
 

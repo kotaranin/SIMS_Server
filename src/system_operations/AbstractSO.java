@@ -20,11 +20,11 @@ public abstract class AbstractSO {
         this.genericBroker = new GenericBroker();
     }
 
-    public final void execute(Object parameter, String condition) throws Exception {
+    public final void execute(Object parameter) throws Exception {
         try {
             conditions(parameter);
             connect();
-            executeOperation(parameter, condition);
+            executeOperation(parameter);
             commit();
         } catch (Exception ex) {
             rollback();
@@ -36,7 +36,7 @@ public abstract class AbstractSO {
 
     protected abstract void conditions(Object parameter) throws Exception;
 
-    protected abstract void executeOperation(Object parameter, String condition) throws Exception;
+    protected abstract void executeOperation(Object parameter) throws Exception;
 
     private void connect() {
         ((DBOperations) genericBroker).connect();

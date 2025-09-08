@@ -20,6 +20,7 @@ public class ServerForm extends javax.swing.JFrame {
 
     /**
      * Creates new form ServerForm
+     * @throws java.io.IOException
      */
     public ServerForm() throws IOException {
         initComponents();
@@ -52,7 +53,7 @@ public class ServerForm extends javax.swing.JFrame {
         itemPort = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Server form");
+        setTitle("Server");
         setResizable(false);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -76,7 +77,7 @@ public class ServerForm extends javax.swing.JFrame {
         });
         jMenu1.add(itemServer);
 
-        itemDB.setText("Konfiguracija baze");
+        itemDB.setText("Konfiguracija baze podataka");
         itemDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemDBActionPerformed(evt);

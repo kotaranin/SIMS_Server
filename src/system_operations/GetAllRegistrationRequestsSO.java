@@ -27,7 +27,7 @@ public class GetAllRegistrationRequestsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         registrationRequests = genericBroker.getAll((RegistrationRequest) parameter, "JOIN study_level ON registration_request.id_study_level = study_level.id_study_level ");
     }
 

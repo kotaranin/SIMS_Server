@@ -26,7 +26,7 @@ public class GetAllModulesSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         modules = genericBroker.getAll((domain.Module) parameter, " JOIN study_program ON module.id_study_program = study_program.id_study_program "
                 + "JOIN study_level ON study_level.id_study_level = study_program.id_study_level ");
     }

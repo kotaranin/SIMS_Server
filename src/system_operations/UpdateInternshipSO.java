@@ -5,6 +5,8 @@
 package system_operations;
 
 import domain.Internship;
+import enums.Grade;
+import java.util.List;
 
 /**
  *
@@ -14,13 +16,22 @@ public class UpdateInternshipSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Internship)) {
-            throw new Exception("Sistem ne moze da kreira strucnu praksu.");
+        Internship internship = (Internship) parameter;
+        GetAllInternshipsSO getAllInternshipsSO = new GetAllInternshipsSO();
+        getAllInternshipsSO.execute(new Internship());
+        List<Internship> internships = getAllInternshipsSO.getInternships();
+        for (Internship i : internships) {
+            if (!i.getIdInternship().equals(internship.getIdInternship()) && i.getStudent().equals(internship.getStudent()) && i.getGrade() == Grade.POLOŽIO) {
+                throw new Exception("Student je odbranio stručnu praksu.");
+            }
+            if (!i.getIdInternship().equals(internship.getIdInternship()) && i.getStudent().equals(internship.getStudent()) && i.getExamPeriod().equals(internship.getExamPeriod())) {
+                throw new Exception("Već je evidentirana odbrana stručne prakse u datom ispitnom roku.");
+            }
         }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         Internship internship = (Internship) parameter;
         genericBroker.update(internship.getReport());
         genericBroker.update(internship);

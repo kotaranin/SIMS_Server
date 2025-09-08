@@ -16,17 +16,18 @@ public class UpdateCountrySO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Country)) {
-            throw new Exception("Sistem ne moze da zapamti drzavu.");
-        }
         Country country = (Country) parameter;
-        if (country.getName() == null || country.getName().isEmpty()) {
-            throw new Exception("Sistem ne moze da zapamti drzavu.");
+        GetAllCountriesSO getAllCountriesSO = new GetAllCountriesSO();
+        getAllCountriesSO.execute(new Country());
+        List<Country> countries = getAllCountriesSO.getCountries();
+        for (Country c : countries) {
+            if (!c.getIdCountry().equals(country.getIdCountry()) && c.getName().equals(country.getName()))
+                throw new Exception("Nije moguce uneti dve drzave pod istim imenom.");
         }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         Country country = (Country) parameter;
         for (City city : country.getCities()) {
             city.setCountry(country);

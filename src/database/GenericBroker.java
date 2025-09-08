@@ -32,11 +32,6 @@ public class GenericBroker implements DBOperations<AbstractDO> {
     }
 
     @Override
-    public List<AbstractDO> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public Long insert(AbstractDO parameter) throws Exception {
         String query = "INSERT INTO " + parameter.getTable() + " (" + parameter.getInsertColumns() + ") VALUES (" + parameter.getInsertParameters() + ")";
         System.out.println(query);

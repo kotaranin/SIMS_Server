@@ -29,7 +29,7 @@ public class PasswordLogInSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         List<StudentOfficer> studentOfficers = genericBroker.getAll((StudentOfficer) parameter, " JOIN study_level ON student_officer.id_study_level = study_level.id_study_level");
         for (StudentOfficer s : studentOfficers) {
             if (s.getEmail().equals(((StudentOfficer) parameter).getEmail())) {
@@ -41,7 +41,7 @@ public class PasswordLogInSO extends AbstractSO {
                 }
             }
         }
-        throw new Exception("Imejl ili lozinka nisu ispravni.");
+        throw new Exception("E-mail ili lozinka nisu ispravni.");
     }
 
 }

@@ -28,9 +28,9 @@ public class SearchInternshipsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         Internship internship = (Internship) parameter;
-        condition = "JOIN teacher ON internship.id_teacher = teacher.id_teacher "
+        String condition = "JOIN teacher ON internship.id_teacher = teacher.id_teacher "
                 + "JOIN exam_period ON internship.id_exam_period = exam_period.id_exam_period "
                 + "JOIN report ON internship.id_report = report.id_report "
                 + "JOIN student_officer ON internship.id_student_officer = student_officer.id_student_officer "
@@ -47,7 +47,7 @@ public class SearchInternshipsSO extends AbstractSO {
             condition += "AND internship.grade = '" + internship.getGrade() + "' ";
         }
         if (internship.getTeacher() != null && internship.getTeacher().getIdTeacher() != null) {
-            condition += "AND teacher.id = " + internship.getTeacher().getIdTeacher() + " ";
+            condition += "AND teacher.id_teacher = " + internship.getTeacher().getIdTeacher() + " ";
         }
         if (internship.getExamPeriod() != null && internship.getExamPeriod().getIdExamPeriod() != null)
             condition += "AND exam_period.id_exam_period = " + internship.getExamPeriod().getIdExamPeriod() + " ";

@@ -26,9 +26,9 @@ public class SearchRegistrationRequestsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         RegistrationRequest registrationRequest = (RegistrationRequest) parameter;
-        condition = "JOIN study_level ON registration_request.id_study_level = study_level.id_study_level "
+        String condition = "JOIN study_level ON registration_request.id_study_level = study_level.id_study_level "
                 + "WHERE 1 = 1 ";
         if (registrationRequest.getFirstName() != null && !registrationRequest.getFirstName().isEmpty())
             condition += "AND LOWER(registration_request.first_name) LIKE '%" + registrationRequest.getFirstName().toLowerCase() + "%' ";

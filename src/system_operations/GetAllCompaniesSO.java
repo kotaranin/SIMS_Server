@@ -26,7 +26,7 @@ public class GetAllCompaniesSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         companies = genericBroker.getAll((Company) parameter, " JOIN city ON company.id_city = city.id_city "
                 + "JOIN country ON city.id_country = country.id_country");
     }

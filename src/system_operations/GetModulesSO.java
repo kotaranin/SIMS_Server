@@ -4,6 +4,7 @@
  */
 package system_operations;
 
+import domain.StudyProgram;
 import java.util.List;
 
 /**
@@ -20,14 +21,16 @@ public class GetModulesSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof domain.Module)) {
+        if (parameter == null || !(parameter instanceof StudyProgram)) {
             throw new Exception("Sistem ne moze da vrati sve module.");
         }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        modules = genericBroker.getAll((domain.Module) parameter, condition);
+    protected void executeOperation(Object parameter) throws Exception {
+        StudyProgram studyProgram = (StudyProgram) parameter;
+        modules = genericBroker.getAll(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
+                + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
     }
 
 }

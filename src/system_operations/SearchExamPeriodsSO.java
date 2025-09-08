@@ -27,8 +27,9 @@ public class SearchExamPeriodsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        examPeriods = genericBroker.getAll((ExamPeriod) parameter, condition);
+    protected void executeOperation(Object parameter) throws Exception {
+        ExamPeriod examPeriod = (ExamPeriod) parameter;
+        examPeriods = genericBroker.getAll((ExamPeriod) parameter, " WHERE LOWER(exam_period.name) LIKE LOWER('%" + examPeriod.getName() + "%')");
     }
 
 }

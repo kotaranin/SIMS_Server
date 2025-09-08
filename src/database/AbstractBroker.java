@@ -14,8 +14,6 @@ public interface AbstractBroker<T> {
 
     public List<T> getAll(T parameter, String condition) throws Exception;
 
-    public List<T> getAll();
-
     public Long insert(T paramater) throws Exception;
     
     public void update(T paramater) throws Exception;

@@ -57,8 +57,6 @@ public class ClientHandler extends Thread {
                 insertReport(request, response);
             case UPDATE_REPORT ->
                 updateReport(request, response);
-            case SEARCH_REPORTS ->
-                searchReports(request, response);
             case GET_ALL_COUNTRIES ->
                 getAllCountries(response);
             case INSERT_COUNTRY ->
@@ -69,8 +67,6 @@ public class ClientHandler extends Thread {
                 searchCountries(request, response);
             case GET_ALL_EXAM_PERIODS ->
                 getAllExamPeriods(response);
-            case DELETE_EXAM_PERIOD ->
-                deleteExamPeriod(request, response);
             case INSERT_EXAM_PERIOD ->
                 insertExamPeriod(request, response);
             case UPDATE_EXAM_PERIOD ->
@@ -79,8 +75,6 @@ public class ClientHandler extends Thread {
                 searchExamPeriod(request, response);
             case GET_ALL_TEACHERS ->
                 getAllTeachers(response);
-            case DELETE_TEACHER ->
-                deleteTeacher(request, response);
             case INSERT_TEACHER ->
                 insertTeacher(request, response);
             case UPDATE_TEACHER ->
@@ -93,8 +87,6 @@ public class ClientHandler extends Thread {
                 insertStudyLevel(request, response);
             case UPDATE_STUDY_LEVEL ->
                 updateStudyLevel(request, response);
-            case SEARCH_STUDY_LEVEL ->
-                searchStudyLevel(request, response);
             case GET_CITIES ->
                 getCities(request, response);
             case GET_STUDY_PROGRAMS ->
@@ -202,10 +194,6 @@ public class ClientHandler extends Thread {
         executeWithoutResult(response, () -> serverController.updateReport((Report) request.getArgument()));
     }
 
-    private void searchReports(Request request, Response response) {
-        executeWithResult(response, () -> serverController.searchReports((String) request.getArgument()));
-    }
-
     private void getAllCountries(Response response) {
         executeWithResult(response, () -> serverController.getAllCountries());
     }
@@ -219,15 +207,11 @@ public class ClientHandler extends Thread {
     }
 
     private void searchCountries(Request request, Response response) {
-        executeWithResult(response, () -> serverController.searchCountries((String) request.getArgument()));
+        executeWithResult(response, () -> serverController.searchCountries((Country) request.getArgument()));
     }
 
     private void getAllExamPeriods(Response response) {
         executeWithResult(response, () -> serverController.getAllExamPeriods());
-    }
-
-    private void deleteExamPeriod(Request request, Response response) {
-        executeWithoutResult(response, () -> serverController.deleteExamPeriod(((ExamPeriod) request.getArgument())));
     }
 
     private void insertExamPeriod(Request request, Response response) {
@@ -239,15 +223,11 @@ public class ClientHandler extends Thread {
     }
 
     private void searchExamPeriod(Request request, Response response) {
-        executeWithResult(response, () -> serverController.searchExamPeriods((String) request.getArgument()));
+        executeWithResult(response, () -> serverController.searchExamPeriods((ExamPeriod) request.getArgument()));
     }
 
     private void getAllTeachers(Response response) {
         executeWithResult(response, () -> serverController.getAllTeachers());
-    }
-
-    private void deleteTeacher(Request request, Response response) {
-        executeWithoutResult(response, () -> serverController.deleteTeacher((Teacher) request.getArgument()));
     }
 
     private void insertTeacher(Request request, Response response) {
@@ -259,7 +239,7 @@ public class ClientHandler extends Thread {
     }
 
     private void searchTeachers(Request request, Response response) {
-        executeWithResult(response, () -> serverController.searchTeachers((String) request.getArgument()));
+        executeWithResult(response, () -> serverController.searchTeachers((Teacher) request.getArgument()));
     }
 
     private void getAllStudyLevels(Response response) {
@@ -272,10 +252,6 @@ public class ClientHandler extends Thread {
 
     private void updateStudyLevel(Request request, Response response) {
         executeWithoutResult(response, () -> serverController.updateStudyLevel((StudyLevel) request.getArgument()));
-    }
-
-    private void searchStudyLevel(Request request, Response response) {
-        executeWithResult(response, () -> serverController.searchStudyLevels((String) request.getArgument()));
     }
 
     private void getCities(Request request, Response response) {

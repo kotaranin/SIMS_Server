@@ -26,7 +26,7 @@ public class GetAllCountriesSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         countries = genericBroker.getAll((Country) parameter, null);
     }
 

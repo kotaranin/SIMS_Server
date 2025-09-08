@@ -5,7 +5,6 @@
 package view;
 
 import configuration.Configuration;
-import view.ServerForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +18,7 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ConfigureDBPanel
+     * @param parent
      */
     public ConfigureDBPanel(ServerForm parent) {
         initComponents();
@@ -51,7 +51,7 @@ public class ConfigureDBPanel extends javax.swing.JPanel {
 
         jLabel1.setText("URL:");
 
-        jLabel2.setText("Korisnicko ime:");
+        jLabel2.setText("Korisničko ime:");
 
         jLabel3.setText("Lozinka:");
 

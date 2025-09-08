@@ -21,7 +21,7 @@ public class UpdateStudentOfficerSO extends AbstractSO{
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         StudentOfficer studentOfficer = (StudentOfficer) parameter;
         String passwordSalt = PasswordUtil.generateSalt();
         String hashedPassword = PasswordUtil.hash(studentOfficer.getHashedPassword(), passwordSalt);

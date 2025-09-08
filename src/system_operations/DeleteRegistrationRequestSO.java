@@ -19,7 +19,7 @@ public class DeleteRegistrationRequestSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         genericBroker.delete((RegistrationRequest) parameter);
     }
 

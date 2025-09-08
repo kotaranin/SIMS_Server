@@ -5,6 +5,7 @@
 package system_operations;
 
 import domain.City;
+import domain.Country;
 import java.util.List;
 
 /**
@@ -21,14 +22,15 @@ public class GetCitiesSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof City)) {
+        if (parameter == null || !(parameter instanceof Country)) {
             throw new Exception("Sistem ne moze da vrati sve gradove.");
         }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        cities = genericBroker.getAll((City) parameter, condition);
+    protected void executeOperation(Object parameter) throws Exception {
+        Country country = (Country) parameter;
+        cities = genericBroker.getAll(new City(), " JOIN country ON city.id_country = country.id_country WHERE country.id_country = " + country.getIdCountry());
     }
 
 }

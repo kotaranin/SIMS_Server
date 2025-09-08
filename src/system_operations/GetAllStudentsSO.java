@@ -27,11 +27,11 @@ public class GetAllStudentsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         students = genericBroker.getAll((Student) parameter, " JOIN city ON student.id_city = city.id_city "
                 + "JOIN country ON city.id_country = country.id_country "
                 + "JOIN study_program ON student.id_study_program = study_program.id_study_program "
-                + "JOIN module ON student.id_module = module.id_module "
+                + "LEFT JOIN module ON student.id_module = module.id_module "
                 + "JOIN study_level ON study_program.id_study_level = study_level.id_study_level ");
     }
 

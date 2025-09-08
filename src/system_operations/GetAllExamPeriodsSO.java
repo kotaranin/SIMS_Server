@@ -26,7 +26,7 @@ public class GetAllExamPeriodsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         examPeriods = genericBroker.getAll((ExamPeriod) parameter, null);
     }
 

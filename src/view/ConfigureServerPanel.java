@@ -23,6 +23,8 @@ public class ConfigureServerPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ConfigureServerPanel
+     * @param parent
+     * @throws java.io.IOException
      */
     public ConfigureServerPanel(ServerForm parent) throws IOException {
         initComponents();

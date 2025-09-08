@@ -5,25 +5,30 @@
 package system_operations;
 
 import domain.ExamPeriod;
+import java.util.List;
 
 /**
  *
  * @author kotar
  */
-public class InsertExamPeriodSO extends AbstractSO{
+public class InsertExamPeriodSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof ExamPeriod))
-            throw new Exception("Sistem ne moze da zapamti ispitni rok.");
         ExamPeriod examPeriod = (ExamPeriod) parameter;
-        if (examPeriod.getName() == null || examPeriod.getName().isEmpty() || examPeriod.getStartDate() == null || examPeriod.getEndDate() == null || examPeriod.getEndDate().isBefore(examPeriod.getStartDate()))
-            throw new Exception("Sistem ne moze da zapamti ispitni rok.");
+        GetAllExamPeriodsSO getAllExamPeriodsSO = new GetAllExamPeriodsSO();
+        getAllExamPeriodsSO.execute(new ExamPeriod());
+        List<ExamPeriod> examPeriods = getAllExamPeriodsSO.getExamPeriods();
+        for (ExamPeriod ep : examPeriods) {
+            if (ep.getName().toLowerCase().equals(examPeriod.getName().toLowerCase()) && ep.getStartDate().equals(examPeriod.getStartDate()) && ep.getEndDate().equals(examPeriod.getEndDate())) {
+                throw new Exception("Nije moguće uneti dva ispitna roka pod istim nazivom, datumom početka i datumom završetka.");
+            }
+        }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         genericBroker.insert((ExamPeriod) parameter);
     }
-    
+
 }

@@ -5,7 +5,6 @@
 package view;
 
 import configuration.Configuration;
-import view.ServerForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +18,7 @@ public class ConfigurePortPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ConfigurePort
+     * @param parent
      */
     public ConfigurePortPanel(ServerForm parent) {
         initComponents();

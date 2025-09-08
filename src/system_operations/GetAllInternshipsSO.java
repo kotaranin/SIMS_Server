@@ -27,7 +27,7 @@ public class GetAllInternshipsSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         internships = genericBroker.getAll((Internship) parameter, "JOIN teacher ON teacher.id_teacher = internship.id_teacher "
                 + "JOIN exam_period ON exam_period.id_exam_period = internship.id_exam_period "
                 + "JOIN report ON report.id_report = internship.id_report "

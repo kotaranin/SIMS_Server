@@ -4,6 +4,7 @@
  */
 package system_operations;
 
+import domain.StudyLevel;
 import domain.StudyProgram;
 import java.util.List;
 
@@ -21,18 +22,19 @@ public class GetStudyProgramsSO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof StudyProgram))
+        if (parameter == null || !(parameter instanceof StudyLevel)) {
             throw new Exception("Sistem ne moze da vrati sve nivoe studija.");
+        }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        studyPrograms = genericBroker.getAll((StudyProgram) parameter, condition);
-        GetModulesSO getAllModulesSO = new GetModulesSO();
+    protected void executeOperation(Object parameter) throws Exception {
+        StudyLevel studyLevel = (StudyLevel) parameter;
+        studyPrograms = genericBroker.getAll(new StudyProgram(), " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE study_program.id_study_level = " + studyLevel.getIdStudyLevel());
+        GetModulesSO getModulesSO = new GetModulesSO();
         for (StudyProgram studyProgram : studyPrograms) {
-            getAllModulesSO.execute(new domain.Module(), " JOIN study_program ON module.id_study_program = study_program.id_study_program"
-                + " JOIN study_level ON study_program.id_study_level = study_level.id_study_level WHERE module.id_study_program = " + studyProgram.getIdStudyProgram());
-            studyProgram.setModules(getAllModulesSO.getModules());
+            getModulesSO.execute(studyProgram);
+            studyProgram.setModules(getModulesSO.getModules());
         }
     }
 

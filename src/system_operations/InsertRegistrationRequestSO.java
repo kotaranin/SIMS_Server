@@ -5,6 +5,8 @@
 package system_operations;
 
 import domain.RegistrationRequest;
+import domain.StudentOfficer;
+import java.util.List;
 import util.PasswordUtil;
 
 /**
@@ -15,12 +17,25 @@ public class InsertRegistrationRequestSO extends AbstractSO{
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof RegistrationRequest))
-            throw new Exception("Sistem ne moze da zapamti zahtev za registraciju.");
+        RegistrationRequest registrationRequest = (RegistrationRequest) parameter;
+        GetAllStudentOfficersSO getAllStudentOfficersSO = new GetAllStudentOfficersSO();
+        getAllStudentOfficersSO.execute(new StudentOfficer());
+        List<StudentOfficer> studentOfficers = getAllStudentOfficersSO.getStudentOfficers();
+        for (StudentOfficer studentOfficer : studentOfficers) {
+            if (studentOfficer.getEmail().equals(registrationRequest.getEmail()))
+                throw new Exception("Nije moguće uneti dva službenika pod istom e-mail adresom.");
+        }
+        GetAllRegistrationRequestsSO getAllRegistrationRequestsSO = new GetAllRegistrationRequestsSO();
+        getAllRegistrationRequestsSO.execute(new RegistrationRequest());
+        List<RegistrationRequest> registrationRequests = getAllRegistrationRequestsSO.getRegistrationRequests();
+        for (RegistrationRequest rr : registrationRequests) {
+            if (rr.getEmail().equals(registrationRequest.getEmail()))
+                throw new Exception("Nije moguće uneti dva zahteva za registraciju pod datom e-mail adresom.");
+        }
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         RegistrationRequest registrationRequest = (RegistrationRequest) parameter;
         String passwordSalt = PasswordUtil.generateSalt();
         String hashedPassword = PasswordUtil.hash(registrationRequest.getHashedPassword(), passwordSalt);

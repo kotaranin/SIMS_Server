@@ -10,17 +10,15 @@ import domain.Company;
  *
  * @author kotar
  */
-public class InsertCompanySO extends AbstractSO{
+public class InsertCompanySO extends AbstractSO {
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Company))
-            throw new Exception("Sistem ne moze da zamapti kompaniju.");
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         genericBroker.insert((Company) parameter);
     }
-    
+
 }

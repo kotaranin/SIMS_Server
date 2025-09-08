@@ -27,8 +27,10 @@ public class SearchTeachersSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        teachers = genericBroker.getAll((Teacher) parameter, condition);
+    protected void executeOperation(Object parameter) throws Exception {
+        Teacher teacher = (Teacher) parameter;
+        String condition = " WHERE LOWER(first_name) LIKE LOWER('%" + teacher.getFirstName() + "%') AND LOWER(last_name) LIKE LOWER('%" + teacher.getLastName() + "%')";
+        teachers = genericBroker.getAll(teacher, condition);
     }
 
 }

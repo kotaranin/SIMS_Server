@@ -14,12 +14,10 @@ public class DeleteInternshipSO extends AbstractSO{
 
     @Override
     protected void conditions(Object parameter) throws Exception {
-        if (parameter == null || !(parameter instanceof Internship))
-            throw new Exception("Sistem ne moze da obrise strucnu praksu.");
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         genericBroker.delete((Internship) parameter);
     }
     

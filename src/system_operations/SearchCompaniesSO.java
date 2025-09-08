@@ -27,9 +27,9 @@ public class SearchCompaniesSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
+    protected void executeOperation(Object parameter) throws Exception {
         Company company = (Company) parameter;
-        condition = " JOIN city ON company.id_city = city.id_city "
+        String condition = " JOIN city ON company.id_city = city.id_city "
                 + "WHERE 1 = 1 ";
         if (company.getName() != null && !company.getName().isEmpty())
             condition += "AND LOWER(company.name) LIKE '%" + company.getName().toLowerCase() + "%' ";

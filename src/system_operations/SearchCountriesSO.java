@@ -26,8 +26,9 @@ public class SearchCountriesSO extends AbstractSO {
     }
 
     @Override
-    protected void executeOperation(Object parameter, String condition) throws Exception {
-        countries = genericBroker.getAll((Country) parameter, condition);
+    protected void executeOperation(Object parameter) throws Exception {
+        Country country = (Country) parameter;
+        countries = genericBroker.getAll((Country) parameter, " WHERE LOWER(name) LIKE LOWER('%" + country.getName() + "%')");
     }
 
 }
