@@ -49,10 +49,6 @@ public class ClientHandler extends Thread {
         switch (request.getOperation()) {
             case PASSWORD_LOG_IN ->
                 passwordLogIn(request, response);
-            case GET_ALL_REPORTS ->
-                getAllReports(response);
-            case DELETE_REPORT ->
-                deleteReport(request, response);
             case INSERT_REPORT ->
                 insertReport(request, response);
             case UPDATE_REPORT ->
@@ -83,6 +79,8 @@ public class ClientHandler extends Thread {
                 searchTeachers(request, response);
             case GET_ALL_STUDY_LEVELS ->
                 getAllStudyLevels(response);
+            case SEARCH_STUDY_LEVEL ->
+                searchStudyLevel(request, response);
             case INSERT_STUDY_LEVEL ->
                 insertStudyLevel(request, response);
             case UPDATE_STUDY_LEVEL ->
@@ -99,8 +97,6 @@ public class ClientHandler extends Thread {
                 getAllCities(response);
             case GET_ALL_STUDY_PROGRAMS ->
                 getAllStudyPrograms(response);
-            case GET_ALL_MODULES ->
-                getAllModules(response);
             case SEARCH_STUDENTS ->
                 searchStudents(request, response);
             case INSERT_STUDENT ->
@@ -176,14 +172,6 @@ public class ClientHandler extends Thread {
 
     private void passwordLogIn(Request request, Response response) {
         executeWithResult(response, () -> serverController.passwordLogIn((StudentOfficer) request.getArgument()));
-    }
-
-    private void getAllReports(Response response) {
-        executeWithResult(response, () -> serverController.getAllReports());
-    }
-
-    private void deleteReport(Request request, Response response) {
-        executeWithoutResult(response, () -> serverController.deleteReport((Report) request.getArgument()));
     }
 
     private void insertReport(Request request, Response response) {
@@ -278,10 +266,6 @@ public class ClientHandler extends Thread {
         executeWithResult(response, () -> serverController.getAllStudyPrograms());
     }
 
-    private void getAllModules(Response response) {
-        executeWithResult(response, () -> serverController.getAllModules());
-    }
-
     private void searchStudents(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchStudents((Student) request.getArgument()));
     }
@@ -360,6 +344,10 @@ public class ClientHandler extends Thread {
 
     private void searchReagistrationRequests(Request request, Response response) {
         executeWithResult(response, () -> serverController.searchRegistrationRequests((RegistrationRequest) request.getArgument()));
+    }
+
+    private void searchStudyLevel(Request request, Response response) {
+        executeWithResult(response, () -> serverController.searchStudyLevels((StudyLevel) request.getArgument()));
     }
 
     @FunctionalInterface

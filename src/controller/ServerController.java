@@ -27,263 +27,252 @@ public class ServerController {
     }
 
     public StudentOfficer passwordLogIn(StudentOfficer studentOfficer) throws Exception {
-        PasswordLogInSO logInSO = new PasswordLogInSO();
+        PasswordLogIn logInSO = new PasswordLogIn();
         logInSO.execute(studentOfficer);
         return logInSO.getStudentOfficer();
     }
 
-    public List<Report> getAllReports() throws Exception {
-        GetAllReportsSO getAllReportsSO = new GetAllReportsSO();
-        getAllReportsSO.execute(new Report());
-        return getAllReportsSO.getReports();
-    }
-
-    public void deleteReport(Report report) throws Exception {
-        DeleteReportSO deleteReportSO = new DeleteReportSO();
-        deleteReportSO.execute(report);
-    }
-
     public void insertReport(Report report) throws Exception {
-        InsertReportSO insertReportSO = new InsertReportSO();
+        InsertReport insertReportSO = new InsertReport();
         insertReportSO.execute(report);
     }
 
     public void updateReport(Report report) throws Exception {
-        UpdateReportSO updateReportSO = new UpdateReportSO();
+        UpdateReport updateReportSO = new UpdateReport();
         updateReportSO.execute(report);
     }
 
     public List<Country> getAllCountries() throws Exception {
-        GetAllCountriesSO getAllCountriesSO = new GetAllCountriesSO();
+        GetAllCountries getAllCountriesSO = new GetAllCountries();
         getAllCountriesSO.execute(new Country());
         return getAllCountriesSO.getCountries();
     }
 
     public void insertCountry(Country country) throws Exception {
-        InsertCountrySO insertCountrySO = new InsertCountrySO();
+        InsertCountry insertCountrySO = new InsertCountry();
         insertCountrySO.execute(country);
     }
 
     public void updateCountry(Country country) throws Exception {
-        UpdateCountrySO updateCountrySO = new UpdateCountrySO();
+        UpdateCountry updateCountrySO = new UpdateCountry();
         updateCountrySO.execute(country);
     }
 
     public List<Country> searchCountries(Country country) throws Exception {
-        SearchCountriesSO searchCountriesSO = new SearchCountriesSO();
+        SearchCountry searchCountriesSO = new SearchCountry();
         searchCountriesSO.execute(country);
         return searchCountriesSO.getCountries();
     }
 
     public List<ExamPeriod> getAllExamPeriods() throws Exception {
-        GetAllExamPeriodsSO getAllExamPeriodsSO = new GetAllExamPeriodsSO();
+        GetAllExamPeriods getAllExamPeriodsSO = new GetAllExamPeriods();
         getAllExamPeriodsSO.execute(new ExamPeriod());
         return getAllExamPeriodsSO.getExamPeriods();
     }
 
     public void insertExamPeriod(ExamPeriod examPeriod) throws Exception {
-        InsertExamPeriodSO insertExamPeriodSO = new InsertExamPeriodSO();
+        InsertExamPeriod insertExamPeriodSO = new InsertExamPeriod();
         insertExamPeriodSO.execute(examPeriod);
     }
 
     public void updateExamPeriod(ExamPeriod examPeriod) throws Exception {
-        UpdateExamPeriodSO updateExamPeriodSO = new UpdateExamPeriodSO();
+        UpdateExamPeriod updateExamPeriodSO = new UpdateExamPeriod();
         updateExamPeriodSO.execute(examPeriod);
     }
 
     public List<ExamPeriod> searchExamPeriods(ExamPeriod examPeriod) throws Exception {
-        SearchExamPeriodsSO searchExamPeriodsSO = new SearchExamPeriodsSO();
+        SearchExamPeriod searchExamPeriodsSO = new SearchExamPeriod();
         searchExamPeriodsSO.execute(examPeriod);
         return searchExamPeriodsSO.getExamPeriods();
     }
 
     public List<Teacher> getAllTeachers() throws Exception {
-        GetAllTeachersSO getAllTeachersSO = new GetAllTeachersSO();
+        GetAllTeachers getAllTeachersSO = new GetAllTeachers();
         getAllTeachersSO.execute(new Teacher());
         return getAllTeachersSO.getTeachers();
     }
 
     public void insertTeacher(Teacher teacher) throws Exception {
-        InsertTeacherSO insertTeacherSO = new InsertTeacherSO();
+        InsertTeacher insertTeacherSO = new InsertTeacher();
         insertTeacherSO.execute(teacher);
     }
 
     public void updateTeacher(Teacher teacher) throws Exception {
-        UpdateTeacherSO updateTeacherSO = new UpdateTeacherSO();
+        UpdateTeacher updateTeacherSO = new UpdateTeacher();
         updateTeacherSO.execute(teacher);
     }
 
     public List<Teacher> searchTeachers(Teacher teacher) throws Exception {
-        SearchTeachersSO searchTeachersSO = new SearchTeachersSO();
+        SearchTeacher searchTeachersSO = new SearchTeacher();
         searchTeachersSO.execute(teacher);
         return searchTeachersSO.getTeachers();
     }
 
     public List<StudyLevel> getAllStudyLevels() throws Exception {
-        GetAllStudyLevelsSO getAllStudyLevelsSO = new GetAllStudyLevelsSO();
+        GetAllStudyLevels getAllStudyLevelsSO = new GetAllStudyLevels();
         getAllStudyLevelsSO.execute(new StudyLevel());
         return getAllStudyLevelsSO.getStudyLevels();
     }
 
     public void insertStudyLevel(StudyLevel studyLevel) throws Exception {
-        InsertStudyLevelSO insertStudyLevelSO = new InsertStudyLevelSO();
+        InsertStudyLevel insertStudyLevelSO = new InsertStudyLevel();
         insertStudyLevelSO.execute(studyLevel);
     }
 
     public void updateStudyLevel(StudyLevel studyLevel) throws Exception {
-        UpdateStudyLevelSO updateStudyLevelSO = new UpdateStudyLevelSO();
+        UpdateStudyLevel updateStudyLevelSO = new UpdateStudyLevel();
         updateStudyLevelSO.execute(studyLevel);
     }
 
     public List<City> getCities(Country country) throws Exception {
-        GetCitiesSO getCitiesSO = new GetCitiesSO();
+        GetCities getCitiesSO = new GetCities();
         getCitiesSO.execute(country);
         return getCitiesSO.getCities();
     }
 
     public List<StudyProgram> getStudyPrograms(StudyLevel studyLevel) throws Exception {
-        GetStudyProgramsSO getStudyProgramsSO = new GetStudyProgramsSO();
+        GetStudyPrograms getStudyProgramsSO = new GetStudyPrograms();
         getStudyProgramsSO.execute(studyLevel);
         return getStudyProgramsSO.getStudyPrograms();
     }
 
     public List<domain.Module> getModules(StudyProgram studyProgram) throws Exception {
-        GetModulesSO getModulesSO = new GetModulesSO();
+        GetModules getModulesSO = new GetModules();
         getModulesSO.execute(studyProgram);
         return getModulesSO.getModules();
     }
 
     public List<Student> getAllStudents() throws Exception {
-        GetAllStudentsSO getAllStudentsSO = new GetAllStudentsSO();
+        GetAllStudents getAllStudentsSO = new GetAllStudents();
         getAllStudentsSO.execute(new Student());
         return getAllStudentsSO.getStudents();
     }
 
     public List<City> getAllCities() throws Exception {
-        GetAllCitiesSO getAllCitiesSO = new GetAllCitiesSO();
+        GetAllCities getAllCitiesSO = new GetAllCities();
         getAllCitiesSO.execute(new City());
         return getAllCitiesSO.getCities();
     }
 
     public List<StudyProgram> getAllStudyPrograms() throws Exception {
-        GetAllStudyProgramsSO getAllStudyProgramsSO = new GetAllStudyProgramsSO();
+        GetAllStudyPrograms getAllStudyProgramsSO = new GetAllStudyPrograms();
         getAllStudyProgramsSO.execute(new StudyProgram());
         return getAllStudyProgramsSO.getStudyPrograms();
     }
 
-    public List<domain.Module> getAllModules() throws Exception {
-        GetAllModulesSO getAllModulesSO = new GetAllModulesSO();
-        getAllModulesSO.execute(new domain.Module());
-        return getAllModulesSO.getModules();
-    }
-
     public List<Student> searchStudents(Student student) throws Exception {
-        SearchStudentsSO searchStudentsSO = new SearchStudentsSO();
+        SearchStudent searchStudentsSO = new SearchStudent();
         searchStudentsSO.execute(student);
         return searchStudentsSO.getStudents();
     }
 
     public void insertStudent(Student student) throws Exception {
-        InsertStudentSO insertStudentSO = new InsertStudentSO();
+        InsertStudent insertStudentSO = new InsertStudent();
         insertStudentSO.execute(student);
     }
 
     public void updateStudent(Student student) throws Exception {
-        UpdateStudentSO updateStudentSO = new UpdateStudentSO();
+        UpdateStudent updateStudentSO = new UpdateStudent();
         updateStudentSO.execute(student);
     }
 
     public List<Company> getAllCompanies() throws Exception {
-        GetAllCompaniesSO getAllCompaniesSO = new GetAllCompaniesSO();
+        GetAllCompanies getAllCompaniesSO = new GetAllCompanies();
         getAllCompaniesSO.execute(new Company());
         return getAllCompaniesSO.getCompanies();
     }
 
     public List<Internship> getAllInternships() throws Exception {
-        GetAllInternshipsSO getAllInternshipsSO = new GetAllInternshipsSO();
+        GetAllInternships getAllInternshipsSO = new GetAllInternships();
         getAllInternshipsSO.execute(new Internship());
         return getAllInternshipsSO.getInternships();
     }
 
     public void deleteInternship(Internship internship) throws Exception {
-        DeleteInternshipSO deleteInternshipSO = new DeleteInternshipSO();
+        DeleteInternship deleteInternshipSO = new DeleteInternship();
         deleteInternshipSO.execute(internship);
     }
 
     public void insertInternship(Internship internship) throws Exception {
-        InsertInternshipSO insertInternshipSO = new InsertInternshipSO();
+        InsertInternship insertInternshipSO = new InsertInternship();
         insertInternshipSO.execute(internship);
     }
 
     public void updateInternship(Internship internship) throws Exception {
-        UpdateInternshipSO updateInternshipSO = new UpdateInternshipSO();
+        UpdateInternship updateInternshipSO = new UpdateInternship();
         updateInternshipSO.execute(internship);
     }
 
     public void insertRegistrationRequest(RegistrationRequest registrationRequest) throws Exception {
-        InsertRegistrationRequestSO insertRegistrationRequestSO = new InsertRegistrationRequestSO();
+        InsertRegistrationRequest insertRegistrationRequestSO = new InsertRegistrationRequest();
         insertRegistrationRequestSO.execute(registrationRequest);
     }
 
     public void deleteRegistrationRequest(RegistrationRequest registrationRequest) throws Exception {
-        DeleteRegistrationRequestSO deleteRegistrationRequestSO = new DeleteRegistrationRequestSO();
+        DeleteRegistrationRequest deleteRegistrationRequestSO = new DeleteRegistrationRequest();
         deleteRegistrationRequestSO.execute(registrationRequest);
     }
 
     public void insertStudentOfficer(StudentOfficer studentOfficer) throws Exception {
-        InsertStudentOfficerSO insertStudentOfficerSO = new InsertStudentOfficerSO();
+        InsertStudentOfficer insertStudentOfficerSO = new InsertStudentOfficer();
         insertStudentOfficerSO.execute(studentOfficer);
     }
 
     public List<RegistrationRequest> getAllRegistrationRequests() throws Exception {
-        GetAllRegistrationRequestsSO getAllRegistrationRequestsSO = new GetAllRegistrationRequestsSO();
+        GetAllRegistrationRequests getAllRegistrationRequestsSO = new GetAllRegistrationRequests();
         getAllRegistrationRequestsSO.execute(new RegistrationRequest());
         return getAllRegistrationRequestsSO.getRegistrationRequests();
     }
 
     public List<StudentOfficer> getAllStudentOfficers() throws Exception {
-        GetAllStudentOfficersSO getAllStudentOfficersSO = new GetAllStudentOfficersSO();
+        GetAllStudentOfficers getAllStudentOfficersSO = new GetAllStudentOfficers();
         getAllStudentOfficersSO.execute(new StudentOfficer());
         return getAllStudentOfficersSO.getStudentOfficers();
     }
 
     public void insertCompany(Company company) throws Exception {
-        InsertCompanySO insertCompanySO = new InsertCompanySO();
+        InsertCompany insertCompanySO = new InsertCompany();
         insertCompanySO.execute(company);
     }
 
     public void updateCompany(Company company) throws Exception {
-        UpdateCompanySO updateCompanySO = new UpdateCompanySO();
+        UpdateCompany updateCompanySO = new UpdateCompany();
         updateCompanySO.execute(company);
     }
 
     public void updateStudentOfficer(StudentOfficer studentOfficer) throws Exception {
-        UpdateStudentOfficerSO updateStudentOfficerSO = new UpdateStudentOfficerSO();
+        UpdateStudentOfficer updateStudentOfficerSO = new UpdateStudentOfficer();
         updateStudentOfficerSO.execute(studentOfficer);
     }
 
     public StudentOfficer questionLogIn(StudentOfficer studentOfficer) throws Exception {
-        QuestionLogInSO questionLogInSO = new QuestionLogInSO();
+        QuestionLogIn questionLogInSO = new QuestionLogIn();
         questionLogInSO.execute(studentOfficer);
         return questionLogInSO.getStudentOfficer();
     }
 
     public List<Company> searchCompanies(Company company) throws Exception {
-        SearchCompaniesSO searchCompaniesSO = new SearchCompaniesSO();
+        SearchCompany searchCompaniesSO = new SearchCompany();
         searchCompaniesSO.execute(company);
         return searchCompaniesSO.getCompanies();
     }
 
     public List<Internship> searchInternships(Internship internship) throws Exception {
-        SearchInternshipsSO searchInternshipsSO = new SearchInternshipsSO();
+        SearchInternship searchInternshipsSO = new SearchInternship();
         searchInternshipsSO.execute(internship);
         return searchInternshipsSO.getInternships();
     }
 
     public List<RegistrationRequest> searchRegistrationRequests(RegistrationRequest registrationRequest) throws Exception {
-        SearchRegistrationRequestsSO searchRegistrationRequestsSO = new SearchRegistrationRequestsSO();
+        SearchRegistrationRequest searchRegistrationRequestsSO = new SearchRegistrationRequest();
         searchRegistrationRequestsSO.execute(registrationRequest);
         return searchRegistrationRequestsSO.getRegistrationRequests();
+    }
+
+    public List<StudyLevel> searchStudyLevels(StudyLevel studyLevel) throws Exception {
+        SearchStudyLevel searchStudyLevel = new SearchStudyLevel();
+        searchStudyLevel.execute(studyLevel);
+        return searchStudyLevel.getStudyLevels();
     }
 
 }

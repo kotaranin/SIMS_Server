@@ -7,6 +7,7 @@ package system_operations;
 import database.AbstractBroker;
 import database.DBOperations;
 import database.GenericBroker;
+import domain.AbstractDO;
 
 /**
  *
@@ -20,9 +21,9 @@ public abstract class AbstractSO {
         this.genericBroker = new GenericBroker();
     }
 
-    public final void execute(Object parameter) throws Exception {
+    public final void execute(AbstractDO parameter) throws Exception {
         try {
-            conditions(parameter);
+            validate(parameter);
             connect();
             executeOperation(parameter);
             commit();
@@ -34,9 +35,9 @@ public abstract class AbstractSO {
         }
     }
 
-    protected abstract void conditions(Object parameter) throws Exception;
+    protected abstract void validate(AbstractDO parameter) throws Exception;
 
-    protected abstract void executeOperation(Object parameter) throws Exception;
+    protected abstract void executeOperation(AbstractDO parameter) throws Exception;
 
     private void connect() {
         ((DBOperations) genericBroker).connect();
